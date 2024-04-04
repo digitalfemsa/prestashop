@@ -1,21 +1,21 @@
 <?php
 /**
  * NOTICE OF LICENSE
- * Title   : Conekta Card Payment Gateway for Prestashop
- * Author  : Conekta.io
- * URL     : https://www.conekta.io/es/docs/plugins/prestashop.
+ * Title   : DigitalFemsa Cash Payment Gateway for Prestashop
+ * Author  : DigitalFemsa.io
+ * URL     : https://www.digitalfemsa.io/es/docs/plugins/prestashop.
  * PHP Version 7.0.0
- * Conekta File Doc Comment
+ * DigitalFemsa File Doc Comment
  *
- * @author    Conekta <support@conekta.io>
- * @copyright 2012-2023 Conekta
+ * @author    DigitalFemsa <support@digitalfemsa.io>
+ * @copyright 2024 DigitalFemsa
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @category  Conekta
+ * @category  DigitalFemsa
  *
  * @version   GIT: @2.3.7@
  *
- * @see       https://conekta.com/
+ * @see       https://digitalfemsa.io/
  */
 if (!function_exists('curl_init')) {
     throw new Exception('DigitalFemsa needs the CURL PHP extension.');
