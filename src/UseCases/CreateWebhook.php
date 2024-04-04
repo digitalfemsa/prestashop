@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa\Payments\UseCases;
 
-require_once __DIR__ . '/../../lib/conekta-php/lib/Conekta.php';
+require_once __DIR__ . '/../../lib/femsa-php/lib/Conekta.php';
 
 use DigitalFemsa\Conekta;
 use DigitalFemsa\Webhook;

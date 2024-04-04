@@ -23,7 +23,7 @@ require_once __DIR__ . '/model/DigitalFemsaConfig.php';
 
 require_once __DIR__ . '/model/DigitalFemsaDatabase.php';
 
-require_once __DIR__ . '/lib/conekta-php/lib/Conekta.php';
+require_once __DIR__ . '/lib/femsa-php/lib/Conekta.php';
 
 require_once __DIR__ . '/src/UseCases/CreateWebhook.php';
 
