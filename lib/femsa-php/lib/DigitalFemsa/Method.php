@@ -20,6 +20,6 @@
 
 namespace DigitalFemsa;
 
-class Method extends ConektaResource
+class Method extends DigitalFemsaResource
 {
 }

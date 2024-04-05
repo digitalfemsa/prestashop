@@ -20,6 +20,6 @@
 
 namespace DigitalFemsa;
 
-class WebhookLog extends ConektaResource
+class WebhookLog extends DigitalFemsaResource
 {
 }

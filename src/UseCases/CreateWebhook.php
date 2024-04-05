@@ -20,37 +20,37 @@
 
 namespace DigitalFemsa\Payments\UseCases;
 
-require_once __DIR__ . '/../../lib/femsa-php/lib/Conekta.php';
+require_once __DIR__ . '/../../lib/femsa-php/lib/DigitalFemsa.php';
 
-use DigitalFemsa\Conekta;
+use DigitalFemsa\DigitalFemsa;
 use DigitalFemsa\Webhook;
 use Configuration;
 use Tools;
 
 class CreateWebhook
 {
-    public const webhookSetting = 'FEMSA_DIGITAL_WEBHOOK';
+    public const webhookSetting = 'DIGITAL_FEMSA_WEBHOOK';
 
-    public const webhookFailedUrlSetting = 'FEMSA_DIGITAL_WEBHOOK_FAILED_URL';
+    public const webhookFailedUrlSetting = 'DIGITAL_FEMSA_WEBHOOK_FAILED_URL';
 
-    public const webhookErrorSetting = 'FEMSA_DIGITAL_WEBHOOK_ERROR_MESSAGE';
+    public const webhookErrorSetting = 'DIGITAL_FEMSA_WEBHOOK_ERROR_MESSAGE';
 
-    public const webhookAttemptsSetting = 'FEMSA_DIGITAL_WEBHOOK_FAILED_ATTEMPTS';
+    public const webhookAttemptsSetting = 'DIGITAL_FEMSA_WEBHOOK_FAILED_ATTEMPTS';
 
     public const MaxFailedAttempts = 5;
 
     public function __invoke(
-        bool $conektaMode,
+        bool $digitalFemsaMode,
         string $privateKey,
         string $isoCode,
         string $pluginVersion,
         string $oldWebhook
     ): bool {
-        Conekta::setApiKey($privateKey);
-        Conekta::setPlugin('Prestashop');
-        Conekta::setApiVersion('2.0.0');
-        Conekta::setPluginVersion($pluginVersion);
-        Conekta::setLocale($isoCode);
+        DigitalFemsa::setApiKey($privateKey);
+        DigitalFemsa::setPlugin('Prestashop');
+        DigitalFemsa::setApiVersion('2.0.0');
+        DigitalFemsa::setPluginVersion($pluginVersion);
+        DigitalFemsa::setLocale($isoCode);
 
         $events = ['events' => ['order.paid', 'order.expired']];
 
@@ -83,7 +83,7 @@ class CreateWebhook
                 });
 
                 if (count($isWebhooksRegistered) <= 0) {
-                    $mode = $conektaMode ? ['production_enabled' => 1] : ['development_enabled' => 1];
+                    $mode = $digitalFemsaMode ? ['production_enabled' => 1] : ['development_enabled' => 1];
                     Webhook::create(array_merge(['url' => $newWebhook], $mode, $events));
 
                     Configuration::updateValue(self::webhookSetting, $newWebhook);

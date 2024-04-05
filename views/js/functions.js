@@ -25,18 +25,18 @@
 
 $(document).ready(function () {
     //initial state
-    let paymentCash = $("#FEMSA_DIGITAL_METHOD_CASH");
-    let expirationDateLimit = $("#FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT");
+    let paymentCash = $("#DIGITAL_FEMSA_METHOD_CASH");
+    let expirationDateLimit = $("#DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT");
     let paymentCashChecked = paymentCash.is(":checked");
 
-    $("#FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_DAYS").prop("disabled", !paymentCashChecked);
-    $("#FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_HOURS").prop("disabled", !paymentCashChecked);
+    $("#DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_DAYS").prop("disabled", !paymentCashChecked);
+    $("#DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_HOURS").prop("disabled", !paymentCashChecked);
     expirationDateLimit.prop("disabled", !paymentCashChecked);
 
     //onchange value
     paymentCash.change(function () {
-        $("#FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_DAYS").prop("disabled", !this.checked);
-        $("#FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_HOURS").prop("disabled", !this.checked);
+        $("#DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_DAYS").prop("disabled", !this.checked);
+        $("#DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_HOURS").prop("disabled", !this.checked);
         expirationDateLimit.prop("disabled", !this.checked);
         expirationDateLimit.prop("required", this.checked);
     });

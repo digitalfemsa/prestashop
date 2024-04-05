@@ -15,10 +15,10 @@
  *}
 {if isset($cash)}
 <p> {l s='Informacion para realizar el pago:' mod='conekta'} <p>
-                <br><br><b>{l s='Monto:' mod='conekta'}</b> $ {$conekta_order.amount|escape:'htmlall':'UTF-8' }
-                {$conekta_order.currency|escape:'htmlall':'UTF-8' }
+                <br><br><b>{l s='Monto:' mod='conekta'}</b> $ {$digital_femsa_order.amount|escape:'htmlall':'UTF-8' }
+                {$digital_femsa_order.currency|escape:'htmlall':'UTF-8' }
                 <br><b><p>OXXO cobrará una comisión adicional al momento de realizar el pago</p>
-                <br><h1>Referencia: {$conekta_order.barcode|escape:'htmlall':'UTF-8'}</h1>
+                <br><h1>Referencia: {$digital_femsa_order.barcode|escape:'htmlall':'UTF-8'}</h1>
                 <br><h4>Instrucciones</h3>
                 <br><p>1.- Acude a la tienda OXXO más cercana</p>
                 <br><p>2.- Indica en caja que quieres realizar un pago de  OXXOPay</p>

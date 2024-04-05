@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class ShippingContact extends ConektaResource
+class ShippingContact extends DigitalFemsaResource
 {
     public $receiver = '';
 
@@ -46,7 +46,7 @@ class ShippingContact extends ConektaResource
 
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

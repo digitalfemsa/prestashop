@@ -20,11 +20,11 @@
 
 namespace DigitalFemsa;
 
-class TaxLine extends ConektaResource
+class TaxLine extends DigitalFemsaResource
 {
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

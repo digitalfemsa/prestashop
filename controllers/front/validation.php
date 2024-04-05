@@ -19,17 +19,17 @@
  */
 
 /**
- * ConektaValidationModuleFrontController Class Doc Comment
+ * DigitalFemsaValidationModuleFrontController Class Doc Comment
  *
- * @author   Conekta <support@conekta.io>
+ * @author   DigitalFemsa <support@digitalfemsa.io>
  *
  * @category Class
  *
  * @license  http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @see     https://conekta.com/
+ * @see     https://digitalfemsa.io/
  */
-class ConektaValidationModuleFrontController extends ModuleFrontController
+class DigitalFemsaValidationModuleFrontController extends ModuleFrontController
 {
     /**
      * Returns the module that the payment of the order was made.
@@ -41,10 +41,10 @@ class ConektaValidationModuleFrontController extends ModuleFrontController
         $cart = $this->context->cart;
         $authorized = false;
         $customer = new Customer($cart->id_customer);
-        $conekta = new OxxoPay();
+        $digitalFemsa = new DigitalFemsa();
 
         foreach (Module::getPaymentModules() as $module) {
-            if ($module['name'] == 'conekta') {
+            if ($module['name'] == 'digital_femsa') {
                 $authorized = true;
 
                 break;
@@ -65,16 +65,16 @@ class ConektaValidationModuleFrontController extends ModuleFrontController
             $date = new DateTime();
 
             $order = (object) [
-                'id' => pSQL(Tools::getValue('conektaOrdenID')),
-                'amount' => pSQL(Tools::getValue('conektAmount')),
+                'id' => pSQL(Tools::getValue('digital_femsa_orden_id')),
+                'amount' => pSQL(Tools::getValue('digital_femsa_mount')),
                 'charges' => (object) [
                     'id' => pSQL(Tools::getValue('chargeId')),
                     'created_at' => pSQL(Tools::getValue('createAt')) ?
                         pSQL(Tools::getValue('createAt')) : $date->getTimestamp(),
-                    'amount' => pSQL(Tools::getValue('conektAmount')),
+                    'amount' => pSQL(Tools::getValue('digital_femsa_mount')),
                     'status' => pSQL(Tools::getValue('charge_status')),
                     'currency' => pSQL(Tools::getValue('charge_currency')),
-                    'livemode' => Configuration::get('FEMSA_DIGITAL_MODE'),
+                    'livemode' => Configuration::get('DIGITAL_FEMSA_MODE'),
                     'payment_method' => (object) [
                         'type' => pSQL(Tools::getValue('payment_type')),
                         'reference' => pSQL(Tools::getValue('reference')),
@@ -83,7 +83,7 @@ class ConektaValidationModuleFrontController extends ModuleFrontController
                 'plan_id' => pSQL(Tools::getValue('plan_id')),
             ];
 
-            $conekta->processPayment($order);
+            $digitalFemsa->processPayment($order);
 
             $this->setTemplate('module:conekta/views/templates/front/payment_return.tpl');
         }

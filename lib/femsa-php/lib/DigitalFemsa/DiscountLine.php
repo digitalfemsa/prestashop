@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class DiscountLine extends ConektaResource
+class DiscountLine extends DigitalFemsaResource
 {
     public $code = '';
 
@@ -44,7 +44,7 @@ class DiscountLine extends ConektaResource
 
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

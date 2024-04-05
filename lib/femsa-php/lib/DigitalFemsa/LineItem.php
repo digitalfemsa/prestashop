@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class LineItem extends ConektaResource
+class LineItem extends DigitalFemsaResource
 {
     public $name = '';
 
@@ -56,7 +56,7 @@ class LineItem extends ConektaResource
 
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

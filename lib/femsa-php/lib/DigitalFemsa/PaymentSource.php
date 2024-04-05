@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class PaymentSource extends ConektaResource
+class PaymentSource extends DigitalFemsaResource
 {
     public const TYPE_CARD = 'card';
 
@@ -28,7 +28,7 @@ class PaymentSource extends ConektaResource
 
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

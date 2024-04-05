@@ -22,7 +22,7 @@ namespace DigitalFemsa;
 
 use ArrayObject;
 
-class ConektaObject extends ArrayObject
+class DigitalFemsaObject extends ArrayObject
 {
     protected $_values;
 
@@ -48,10 +48,10 @@ class ConektaObject extends ArrayObject
     {
         foreach ($values as $object => $val) {
             if (is_array($val)) {
-                $val = Util::convertToConektaObject($val);
+                $val = Util::convertToFemsaDigitalObject($val);
             }
 
-            if (strpos(get_class($this), 'ConektaObject') !== false) {
+            if (strpos(get_class($this), 'DigitalFemsaObject') !== false) {
                 $this[$object] = $val;
             } else {
                 if (strpos($object, 'url') !== false && strpos(get_class($this), 'Webhook') !== false) {
@@ -60,7 +60,7 @@ class ConektaObject extends ArrayObject
                 $this->$object = $val;
 
                 if ($object == 'metadata') {
-                    $this->metadata = new ConektaObject();
+                    $this->metadata = new DigitalFemsaObject();
 
                     if (is_array($val) || is_object($val)) {
                         foreach ($val as $object2 => $val2) {

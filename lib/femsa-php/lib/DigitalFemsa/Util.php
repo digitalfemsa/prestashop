@@ -34,15 +34,14 @@ abstract class Util
     'tax_line' => '\DigitalFemsa\TaxLine',
     'shipping_line' => '\DigitalFemsa\ShippingLine',
     'discount_line' => '\DigitalFemsa\DiscountLine',
-    'conekta_list' => '\DigitalFemsa\ConektaList',
+    'digital_femsa_list' => '\DigitalFemsa\DigitalFemsaList',
     'shipping_contact' => '\DigitalFemsa\ShippingContact',
     'lang' => '\DigitalFemsa\Lang',
     'line_item' => '\DigitalFemsa\LineItem',
     'order' => '\DigitalFemsa\Order',
-    'token' => '\DigitalFemsa\Token',
     ];
 
-    public static function convertToConektaObject($resp)
+    public static function convertToFemsaDigitalObject($resp)
     {
         $types = self::$types;
 
@@ -64,13 +63,13 @@ abstract class Util
             }
 
             if (current($resp)) {
-                $instance = new ConektaObject();
+                $instance = new DigitalFemsaObject();
                 $instance->loadFromArray($resp);
 
                 return $instance;
             }
 
-            return new ConektaObject();
+            return new DigitalFemsaObject();
         }
 
         return $resp;

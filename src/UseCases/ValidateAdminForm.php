@@ -29,57 +29,57 @@ class ValidateAdminForm
     {
         $arrayErrors = [];
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_TEST'))
-            || !Validate::isString(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_TEST'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_TEST'))
+            || !Validate::isString(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_TEST'))) {
             $arrayErrors[] = 'The "Test Public Key" field is required.';
         }
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_LIVE'))
-            || !Validate::isString(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_LIVE'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_LIVE'))
+            || !Validate::isString(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_LIVE'))) {
             $arrayErrors[] = 'The "Live Public Key" field is required.';
         }
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_TEST'))
-            || !Validate::isString(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_TEST'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_TEST'))
+            || !Validate::isString(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_TEST'))) {
             $arrayErrors[] = 'The "Test Private Key" field is required.';
         }
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_LIVE'))
-            || !Validate::isString(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_LIVE'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_LIVE'))
+            || !Validate::isString(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_LIVE'))) {
             $arrayErrors[] = 'The "Live Private Key" field is required.';
         }
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_WEBHOOK'))
-            || !Validate::isAbsoluteUrl(Tools::getValue('FEMSA_DIGITAL_WEBHOOK'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_WEBHOOK'))
+            || !Validate::isAbsoluteUrl(Tools::getValue('DIGITAL_FEMSA_WEBHOOK'))) {
             $arrayErrors[] = 'The "Webhook" field is required or must be an url';
         }
 
-        if (empty(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH'))) {
+        if (empty(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH'))) {
             $arrayErrors[] = 'You need select almost one payment method.';
         }
 
-        $conektaExpirationDateLimit = (int) Tools::getValue('FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT');
-        $conektaExpirationDateType = (int) Tools::getValue('FEMSA_DIGITAL_EXPIRATION_DATE_TYPE');
+        $digitalFemsaExpirationDateLimit = (int) Tools::getValue('DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT');
+        $digitalFemsaExpirationDateType = (int) Tools::getValue('DIGITAL_FEMSA_EXPIRATION_DATE_TYPE');
 
-        if (!empty(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH'))
-            && empty($conektaExpirationDateLimit)) {
+        if (!empty(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH'))
+            && empty($digitalFemsaExpirationDateLimit)) {
             $arrayErrors[] = 'The "Expiration date limit" field is required.';
         }
 
-        if (!empty(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH'))
-            && !Validate::isInt($conektaExpirationDateLimit)) {
+        if (!empty(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH'))
+            && !Validate::isInt($digitalFemsaExpirationDateLimit)) {
             $arrayErrors[] = 'The "Expiration date limit" must be a number.';
         }
 
-        if (!empty(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH'))
-            && $conektaExpirationDateType === 0
-            && ($conektaExpirationDateLimit < 0 || $conektaExpirationDateLimit > 31)) {
+        if (!empty(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH'))
+            && $digitalFemsaExpirationDateType === 0
+            && ($digitalFemsaExpirationDateLimit < 0 || $digitalFemsaExpirationDateLimit > 31)) {
             $arrayErrors[] = 'The "Expiration date limit" is out of range. must be a number between 0 and 31';
         }
 
-        if (!empty(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH'))
-            && $conektaExpirationDateType === 1
-            && ($conektaExpirationDateLimit < 0 || $conektaExpirationDateLimit > 24)) {
+        if (!empty(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH'))
+            && $digitalFemsaExpirationDateType === 1
+            && ($digitalFemsaExpirationDateLimit < 0 || $digitalFemsaExpirationDateLimit > 24)) {
             $arrayErrors[] = 'The "Expiration date limit" is out of range. must be a number between 0 and 24';
         }
 

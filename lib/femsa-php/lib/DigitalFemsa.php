@@ -35,23 +35,21 @@ if (!function_exists('get_called_class')) {
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Lang.php';
 
-require_once dirname(__FILE__) . '/DigitalFemsa/Conekta.php';
+require_once dirname(__FILE__) . '/DigitalFemsa/DigitalFemsa.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Util.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Requestor.php';
 
-require_once dirname(__FILE__) . '/DigitalFemsa/ConektaObject.php';
+require_once dirname(__FILE__) . '/DigitalFemsa/DigitalFemsaObject.php';
 
-require_once dirname(__FILE__) . '/DigitalFemsa/ConektaResource.php';
+require_once dirname(__FILE__) . '/DigitalFemsa/DigitalFemsaResource.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Charge.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/PaymentMethod.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Customer.php';
-
-require_once dirname(__FILE__) . '/DigitalFemsa/Token.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/Event.php';
 
@@ -77,7 +75,7 @@ require_once dirname(__FILE__) . '/DigitalFemsa/ShippingLine.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/LineItem.php';
 
-require_once dirname(__FILE__) . '/DigitalFemsa/ConektaList.php';
+require_once dirname(__FILE__) . '/DigitalFemsa/DigitalFemsaList.php';
 
 require_once dirname(__FILE__) . '/DigitalFemsa/ShippingContact.php';
 

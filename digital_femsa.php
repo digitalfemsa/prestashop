@@ -23,7 +23,7 @@ require_once __DIR__ . '/model/DigitalFemsaConfig.php';
 
 require_once __DIR__ . '/model/DigitalFemsaDatabase.php';
 
-require_once __DIR__ . '/lib/femsa-php/lib/Conekta.php';
+require_once __DIR__ . '/lib/femsa-php/lib/DigitalFemsa.php';
 
 require_once __DIR__ . '/src/UseCases/CreateWebhook.php';
 
@@ -49,24 +49,24 @@ define('DIGITAL_FEMSA_METADATA_LIMIT', 12);
  *
  * @see      https://conekta.com/
  */
-class OxxoPay extends PaymentModule
+class DigitalFemsa extends PaymentModule
 {
     public const ConektaSettings = [
-        'FEMSA_DIGITAL_PRESTASHOP_VERSION',
-        'FEMSA_DIGITAL_MODE',
-        'FEMSA_DIGITAL_PUBLIC_KEY_TEST',
-        'FEMSA_DIGITAL_PUBLIC_KEY_LIVE',
-        'FEMSA_DIGITAL_PRIVATE_KEY_TEST',
-        'FEMSA_DIGITAL_PRIVATE_KEY_LIVE',
-        'FEMSA_DIGITAL_WEBHOOK',
-        'FEMSA_DIGITAL_WEBHOOK_FAILED_URL',
-        'FEMSA_DIGITAL_WEBHOOK_ERROR_MESSAGE',
-        'FEMSA_DIGITAL_WEBHOOK_FAILED_ATTEMPTS',
-        'FEMSA_DIGITAL_METHOD_CASH',
-        'FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT',
-        'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE',
-        'FEMSA_DIGITAL_ORDER_METADATA',
-        'FEMSA_DIGITAL_PRODUCT_METADATA',
+        'DIGITAL_FEMSA_PRESTASHOP_VERSION',
+        'DIGITAL_FEMSA_MODE',
+        'DIGITAL_FEMSA_PUBLIC_KEY_TEST',
+        'DIGITAL_FEMSA_PUBLIC_KEY_LIVE',
+        'DIGITAL_FEMSA_PRIVATE_KEY_TEST',
+        'DIGITAL_FEMSA_PRIVATE_KEY_LIVE',
+        'DIGITAL_FEMSA_WEBHOOK',
+        'DIGITAL_FEMSA_WEBHOOK_FAILED_URL',
+        'DIGITAL_FEMSA_WEBHOOK_ERROR_MESSAGE',
+        'DIGITAL_FEMSA_WEBHOOK_FAILED_ATTEMPTS',
+        'DIGITAL_FEMSA_METHOD_CASH',
+        'DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT',
+        'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE',
+        'DIGITAL_FEMSA_ORDER_METADATA',
+        'DIGITAL_FEMSA_PRODUCT_METADATA',
     ];
 
     public const CartProductAttribute = [
@@ -155,7 +155,7 @@ class OxxoPay extends PaymentModule
     /**
      * @var string
      */
-    private $conektaMode;
+    private $digitalFemsaMode;
 
     /**
      * Implement the configuration of the DigitalFemsa Prestashop module
@@ -222,7 +222,7 @@ class OxxoPay extends PaymentModule
             $attr = $mappedConfig[$key];
             $this->$attr = $value;
 
-            if ($key == 'FEMSA_DIGITAL_MODE') {
+            if ($key == 'DIGITAL_FEMSA_MODE') {
                 $this->conektaMode = ($value) ? 'live' : 'test';
             }
         }
@@ -234,15 +234,15 @@ class OxxoPay extends PaymentModule
     private function mappedConfig()
     {
         return [
-            'FEMSA_DIGITAL_MODE' => 'mode',
-            'FEMSA_DIGITAL_WEBHOOK' => 'web_hook',
-            'FEMSA_DIGITAL_METHOD_CASH' => 'payment_method_cash',
-            'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE' => 'expiration_date_type',
-            'FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT' => 'expiration_date_limit',
-            'FEMSA_DIGITAL_PRIVATE_KEY_TEST' => 'test_private_key',
-            'FEMSA_DIGITAL_PUBLIC_KEY_TEST' => 'test_public_key',
-            'FEMSA_DIGITAL_PRIVATE_KEY_LIVE' => 'live_private_key',
-            'FEMSA_DIGITAL_PUBLIC_KEY_LIVE' => 'live_public_key'
+            'DIGITAL_FEMSA_MODE' => 'mode',
+            'DIGITAL_FEMSA_WEBHOOK' => 'web_hook',
+            'DIGITAL_FEMSA_METHOD_CASH' => 'payment_method_cash',
+            'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE' => 'expiration_date_type',
+            'DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT' => 'expiration_date_limit',
+            'DIGITAL_FEMSA_PRIVATE_KEY_TEST' => 'test_private_key',
+            'DIGITAL_FEMSA_PUBLIC_KEY_TEST' => 'test_public_key',
+            'DIGITAL_FEMSA_PRIVATE_KEY_LIVE' => 'live_private_key',
+            'DIGITAL_FEMSA_PUBLIC_KEY_LIVE' => 'live_public_key'
         ];
     }
 
@@ -286,16 +286,16 @@ class OxxoPay extends PaymentModule
             || !$this->registerHook('paymentReturn')
             || !$this->registerHook('adminOrder')
             || !$this->registerHook('updateOrderStatus')
-            && Configuration::updateValue('FEMSA_DIGITAL_METHOD_CASH', 1)
-            && Configuration::updateValue('FEMSA_DIGITAL_MODE', 0)
+            && Configuration::updateValue('DIGITAL_FEMSA_METHOD_CASH', 1)
+            && Configuration::updateValue('DIGITAL_FEMSA_MODE', 0)
             || !DigitalFemsaDatabase::installDb()
-            || !DigitalFemsaDatabase::createTableConektaOrder()
+            || !DigitalFemsaDatabase::createTableDigitalFemsaOrder()
             || !DigitalFemsaDatabase::createTableMetaData()
         ) {
             return false;
         }
 
-        Configuration::updateValue('FEMSA_DIGITAL_PRESTASHOP_VERSION', $this->version);
+        Configuration::updateValue('DIGITAL_FEMSA_PRESTASHOP_VERSION', $this->version);
 
         return true;
     }
@@ -325,13 +325,13 @@ class OxxoPay extends PaymentModule
         return parent::uninstall()
             && count($configDeleted) == 0
             && Db::getInstance()->Execute(
-                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'conekta_transaction`'
+                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'digital_femsa_transaction`'
             )
             && Db::getInstance()->Execute(
-                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'conekta_metadata`'
+                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'digital_femsa_metadata`'
             )
             && Db::getInstance()->Execute(
-                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'conekta_order_checkout`'
+                'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'digital_femsa_order_checkout`'
             );
     }
 
@@ -346,17 +346,17 @@ class OxxoPay extends PaymentModule
     {
         if ($params['order'] && Validate::isLoadedObject($params['order'])) {
             $id_order = (int) $params['order']->id;
-            $conekta_tran_details = DigitalFemsaDatabase::getOrderById($id_order);
+            $digital_femsa_tran_details = DigitalFemsaDatabase::getOrderById($id_order);
 
             $this->smarty->assign('cash', true);
             $this->smarty->assign(
-                'conekta_order',
+                'digital_femsa_order',
                 [
-                    'barcode' => $conekta_tran_details['reference'],
+                    'barcode' => $digital_femsa_tran_details['reference'],
                     'type' => 'cash',
-                    'barcode_url' => $conekta_tran_details['barcode'],
-                    'amount' => $conekta_tran_details['amount'],
-                    'currency' => $conekta_tran_details['currency'],
+                    'barcode_url' => $digital_femsa_tran_details['barcode'],
+                    'amount' => $digital_femsa_tran_details['amount'],
+                    'currency' => $digital_femsa_tran_details['currency'],
                 ]
             );
         }
@@ -375,27 +375,27 @@ class OxxoPay extends PaymentModule
     {
         if ($params['newOrderStatus']->id == 7) {
             // order refunded
-            $key = Configuration::get('FEMSA_DIGITAL_MODE') ?
-                Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_LIVE') :
-                Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST');
+            $key = Configuration::get('DIGITAL_FEMSA_MODE') ?
+                Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_LIVE') :
+                Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST');
 
             $iso_code = $this->context->language->iso_code;
 
-            \DigitalFemsa\Conekta::setApiKey($key);
-            \DigitalFemsa\Conekta::setPlugin('Prestashop1.7');
-            \DigitalFemsa\Conekta::setApiVersion('2.0.0');
-            \DigitalFemsa\Conekta::setPluginVersion($this->version);
-            \DigitalFemsa\Conekta::setLocale($iso_code);
+            \DigitalFemsa\DigitalFemsa::setApiKey($key);
+            \DigitalFemsa\DigitalFemsa::setPlugin('Prestashop1.7');
+            \DigitalFemsa\DigitalFemsa::setApiVersion('2.0.0');
+            \DigitalFemsa\DigitalFemsa::setPluginVersion($this->version);
+            \DigitalFemsa\DigitalFemsa::setLocale($iso_code);
 
             $id_order = (int) $params['id_order'];
-            $conekta_tran_details = DigitalFemsaDatabase::getOrderById($id_order);
+            $digital_femsa_tran_details = DigitalFemsaDatabase::getOrderById($id_order);
 
             // only credit card refund
-            if (!$conekta_tran_details['barcode']
-                && !(isset($conekta_tran_details['reference'])
-                    && !empty($conekta_tran_details['reference']))
+            if (!$digital_femsa_tran_details['barcode']
+                && !(isset($digital_femsa_tran_details['reference'])
+                    && !empty($digital_femsa_tran_details['reference']))
             ) {
-                $order = \DigitalFemsa\Order::find($conekta_tran_details['id_conekta_order']);
+                $order = \DigitalFemsa\Order::find($digital_femsa_tran_details['id_digital_femsa_order']);
                 $order->refund(['reason' => 'requested_by_client']);
             }
         }
@@ -469,13 +469,13 @@ class OxxoPay extends PaymentModule
      */
     public function hookHeader()
     {
-        $key = Configuration::get('FEMSA_DIGITAL_MODE') ? Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_LIVE')
-            : Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST');
+        $key = Configuration::get('DIGITAL_FEMSA_MODE') ? Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_LIVE')
+            : Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST');
         $iso_code = $this->context->language->iso_code;
-        \DigitalFemsa\Conekta::setApiKey($key);
-        \DigitalFemsa\Conekta::setPlugin('Prestashop1.7');
-        \DigitalFemsa\Conekta::setApiVersion('2.0.0');
-        \DigitalFemsa\Conekta::setLocale($iso_code);
+        \DigitalFemsa\DigitalFemsa::setApiKey($key);
+        \DigitalFemsa\DigitalFemsa::setPlugin('Prestashop1.7');
+        \DigitalFemsa\DigitalFemsa::setApiVersion('2.0.0');
+        \DigitalFemsa\DigitalFemsa::setLocale($iso_code);
 
         if (Tools::getValue('controller') != 'order-opc'
             && (!($_SERVER['PHP_SELF'] == __PS_BASE_URI__ . 'order.php'
@@ -493,10 +493,10 @@ class OxxoPay extends PaymentModule
         );
         $this->context->controller->addCSS($this->_path . 'views/css/conekta-prestashop.css');
 
-        if (Configuration::get('FEMSA_DIGITAL_MODE')) {
-            $this->smarty->assign('api_key', addslashes(Configuration::get('FEMSA_DIGITAL_PUBLIC_KEY_LIVE')));
+        if (Configuration::get('DIGITAL_FEMSA_MODE')) {
+            $this->smarty->assign('api_key', addslashes(Configuration::get('DIGITAL_FEMSA_PUBLIC_KEY_LIVE')));
         } else {
-            $this->smarty->assign('api_key', addslashes(Configuration::get('FEMSA_DIGITAL_PUBLIC_KEY_TEST')));
+            $this->smarty->assign('api_key', addslashes(Configuration::get('DIGITAL_FEMSA_PUBLIC_KEY_TEST')));
         }
 
         $this->smarty->assign('path', $this->_path);
@@ -525,7 +525,7 @@ class OxxoPay extends PaymentModule
         $shippingContact = DigitalFemsaConfig::getShippingContact($customer, $address_delivery, $state, $country);
         $customerInfo = DigitalFemsaConfig::getCustomerInfo($customer, $address_delivery);
 
-        $result = DigitalFemsaDatabase::getConektaMetadata($customer->id, $this->conektaMode, 'conekta_customer_id');
+        $result = DigitalFemsaDatabase::getDigitalFemsaMetadata($customer->id, $this->conektaMode, 'digital_femsa_customer_id');
 
         if (count($payment_options) > 0
             && !empty($shippingContact['address']['postal_code'])
@@ -546,13 +546,13 @@ class OxxoPay extends PaymentModule
             $checkout = [
                 'type' => 'HostedPayment',
                 'allowed_payment_methods' => $payment_options,
-                'failure_url' => Configuration::get('FEMSA_DIGITAL_WEBHOOK'),
-                'success_url' => Configuration::get('FEMSA_DIGITAL_WEBHOOK'),
+                'failure_url' => Configuration::get('DIGITAL_FEMSA_WEBHOOK'),
+                'success_url' => Configuration::get('DIGITAL_FEMSA_WEBHOOK'),
             ];
 
             if (in_array('cash', $payment_options)) {
-                $expirationDateLimit = Configuration::get('FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT');
-                $expirationDateType = Configuration::get('FEMSA_DIGITAL_EXPIRATION_DATE_TYPE') == 0 ? 86400 : 3600;
+                $expirationDateLimit = Configuration::get('DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT');
+                $expirationDateType = Configuration::get('DIGITAL_FEMSA_EXPIRATION_DATE_TYPE') == 0 ? 86400 : 3600;
                 $checkout['expires_at'] = time() + ($expirationDateLimit * $expirationDateType);
             }
 
@@ -630,7 +630,7 @@ class OxxoPay extends PaymentModule
                 }
             }
 
-            $result = DigitalFemsaDatabase::getConektaOrder($customer->id, $this->conektaMode, $this->context->cart->id);
+            $result = DigitalFemsaDatabase::getDigitalFemsaOrder($customer->id, $this->conektaMode, $this->context->cart->id);
 
             try {
                 if ($order_details['currency'] == 'MXN' && $amount < $this->amount_min) {
@@ -645,10 +645,10 @@ class OxxoPay extends PaymentModule
                 }
 
                 if (isset($result) && $result != false && $result['status'] == 'unpaid') {
-                    $order = \DigitalFemsa\Order::find($result['id_conekta_order']);
+                    $order = \DigitalFemsa\Order::find($result['id_digital_femsa_order']);
 
                     if (isset($order->charges[0]->status) && $order->charges[0]->status == 'paid') {
-                        DigitalFemsaDatabase::updateConektaOrder(
+                        DigitalFemsaDatabase::updateDigitalFemsaOrder(
                             $customer->id,
                             $this->context->cart->id,
                             $this->conektaMode,
@@ -660,7 +660,7 @@ class OxxoPay extends PaymentModule
 
                 if (empty($order)) {
                     $order = \DigitalFemsa\Order::create($order_details);
-                    DigitalFemsaDatabase::updateConektaOrder(
+                    DigitalFemsaDatabase::updateDigitalFemsaOrder(
                         $customer->id,
                         $this->context->cart->id,
                         $this->conektaMode,
@@ -672,7 +672,7 @@ class OxxoPay extends PaymentModule
                     $order->update($order_details);
                 } else {
                     $order = \DigitalFemsa\Order::create($order_details);
-                    DigitalFemsaDatabase::updateConektaOrder(
+                    DigitalFemsaDatabase::updateDigitalFemsaOrder(
                         $customer->id,
                         $this->context->cart->id,
                         $this->conektaMode,
@@ -779,7 +779,7 @@ class OxxoPay extends PaymentModule
         }
         $this->smarty->assign(
             [
-                'test_private_key' => Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST'),
+                'test_private_key' => Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST'),
             ]
         );
         $payment_options = [
@@ -849,15 +849,15 @@ class OxxoPay extends PaymentModule
     private function upgradeConfig()
     {
         $configMap = [
-            'PAYMENT_METHS_CASH' => 'FEMSA_DIGITAL_METHOD_CASH',
-            'EXPIRATION_DATE_LIMIT' => 'FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT',
-            'EXPIRATION_DATE_TYPE' => 'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE',
-            'MODE' => 'FEMSA_DIGITAL_MODE',
-            'WEB_HOOK' => 'FEMSA_DIGITAL_WEBHOOK',
-            'TEST_PRIVATE_KEY' => 'FEMSA_DIGITAL_PRIVATE_KEY_TEST',
-            'TEST_PUBLIC_KEY' => 'FEMSA_DIGITAL_PUBLIC_KEY_TEST',
-            'LIVE_PUBLIC_KEY' => 'FEMSA_DIGITAL_PUBLIC_KEY_LIVE',
-            'LIVE_PRIVATE_KEY' => 'FEMSA_DIGITAL_PRIVATE_KEY_LIVE'
+            'PAYMENT_METHS_CASH' => 'DIGITAL_FEMSA_METHOD_CASH',
+            'EXPIRATION_DATE_LIMIT' => 'DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT',
+            'EXPIRATION_DATE_TYPE' => 'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE',
+            'MODE' => 'DIGITAL_FEMSA_MODE',
+            'WEB_HOOK' => 'DIGITAL_FEMSA_WEBHOOK',
+            'TEST_PRIVATE_KEY' => 'DIGITAL_FEMSA_PRIVATE_KEY_TEST',
+            'TEST_PUBLIC_KEY' => 'DIGITAL_FEMSA_PUBLIC_KEY_TEST',
+            'LIVE_PUBLIC_KEY' => 'DIGITAL_FEMSA_PUBLIC_KEY_LIVE',
+            'LIVE_PRIVATE_KEY' => 'DIGITAL_FEMSA_PRIVATE_KEY_LIVE'
         ];
         array_walk($configMap, function ($destiny, $source) {
             Configuration::updateValue($destiny, Configuration::get($source));
@@ -873,15 +873,15 @@ class OxxoPay extends PaymentModule
     private function postProcess()
     {
         $configurationValues = [
-            'FEMSA_DIGITAL_WEBHOOK' => rtrim(Tools::getValue('FEMSA_DIGITAL_WEBHOOK')),
-            'FEMSA_DIGITAL_MODE' => Tools::getValue('FEMSA_DIGITAL_MODE'),
-            'FEMSA_DIGITAL_PUBLIC_KEY_TEST' => rtrim(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_TEST')),
-            'FEMSA_DIGITAL_PUBLIC_KEY_LIVE' => rtrim(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_LIVE')),
-            'FEMSA_DIGITAL_PRIVATE_KEY_TEST' => rtrim(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_TEST')),
-            'FEMSA_DIGITAL_PRIVATE_KEY_LIVE' => rtrim(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_LIVE')),
-            'FEMSA_DIGITAL_METHOD_CASH' => rtrim(Tools::getValue('FEMSA_DIGITAL_METHOD_CASH')),
-            'FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT' => rtrim(Tools::getValue('FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT')),
-            'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE' => rtrim(Tools::getValue('FEMSA_DIGITAL_EXPIRATION_DATE_TYPE')),
+            'DIGITAL_FEMSA_WEBHOOK' => rtrim(Tools::getValue('DIGITAL_FEMSA_WEBHOOK')),
+            'DIGITAL_FEMSA_MODE' => Tools::getValue('DIGITAL_FEMSA_MODE'),
+            'DIGITAL_FEMSA_PUBLIC_KEY_TEST' => rtrim(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_TEST')),
+            'DIGITAL_FEMSA_PUBLIC_KEY_LIVE' => rtrim(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_LIVE')),
+            'DIGITAL_FEMSA_PRIVATE_KEY_TEST' => rtrim(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_TEST')),
+            'DIGITAL_FEMSA_PRIVATE_KEY_LIVE' => rtrim(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_LIVE')),
+            'DIGITAL_FEMSA_METHOD_CASH' => rtrim(Tools::getValue('DIGITAL_FEMSA_METHOD_CASH')),
+            'DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT' => rtrim(Tools::getValue('DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT')),
+            'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE' => rtrim(Tools::getValue('DIGITAL_FEMSA_EXPIRATION_DATE_TYPE')),
         ];
         array_walk($configurationValues, function ($value, $key) {
             Configuration::updateValue($key, $value);
@@ -925,7 +925,7 @@ class OxxoPay extends PaymentModule
         array_walk($settings, function ($setting) use (&$settingsFieldsValues) {
             $settingValue = Tools::getValue($setting, Configuration::get($setting));
 
-            if ($setting === 'FEMSA_DIGITAL_WEBHOOK') {
+            if ($setting === 'DIGITAL_FEMSA_WEBHOOK') {
                 $settingValue = !empty($settingValue) ? $settingValue : Context::getContext()->link->getModuleLink(
                     'conekta',
                     'notification',
@@ -984,7 +984,7 @@ class OxxoPay extends PaymentModule
                     [
                         'type' => 'radio',
                         'label' => $this->l('Mode'),
-                        'name' => 'FEMSA_DIGITAL_MODE',
+                        'name' => 'DIGITAL_FEMSA_MODE',
                         'required' => true,
                         'class' => 't',
                         'is_bool' => true,
@@ -1001,14 +1001,14 @@ class OxxoPay extends PaymentModule
                             [],
                             'Modules.DigitalFemsa.Admin'
                         ),
-                        'name' => 'FEMSA_DIGITAL_WEBHOOK',
+                        'name' => 'DIGITAL_FEMSA_WEBHOOK',
                         'required' => true,
                     ],
                     [
                         'type' => 'checkbox',
                         'label' => $this->l('Payment Method'),
                         'desc' => $this->l('Choose options.'),
-                        'name' => 'FEMSA_DIGITAL_METHOD',
+                        'name' => 'DIGITAL_FEMSA_METHOD',
                         'values' => [
                             'query' => [
                                 [
@@ -1030,41 +1030,41 @@ class OxxoPay extends PaymentModule
                     [
                         'type' => 'radio',
                         'label' => $this->l('Expiration date type'),
-                        'name' => 'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE',
+                        'name' => 'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE',
                         'class' => 't',
                         'is_bool' => true,
                         'values' => [
-                            ['id' => 'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_DAYS', 'value' => 0, 'label' => $this->l('Days')],
-                            ['id' => 'FEMSA_DIGITAL_EXPIRATION_DATE_TYPE_HOURS', 'value' => 1, 'label' => $this->l('Hours')],
+                            ['id' => 'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_DAYS', 'value' => 0, 'label' => $this->l('Days')],
+                            ['id' => 'DIGITAL_FEMSA_EXPIRATION_DATE_TYPE_HOURS', 'value' => 1, 'label' => $this->l('Hours')],
                         ],
                     ],
                     [
                         'type' => 'text',
                         'label' => $this->trans('Expiration date limit', [], 'Modules.DigitalFemsa.Admin'),
-                        'name' => 'FEMSA_DIGITAL_EXPIRATION_DATE_LIMIT',
+                        'name' => 'DIGITAL_FEMSA_EXPIRATION_DATE_LIMIT',
                     ],
                     [
                         'type' => 'text',
                         'label' => $this->trans('Test Private Key', [], 'Modules.DigitalFemsa.Admin'),
-                        'name' => 'FEMSA_DIGITAL_PRIVATE_KEY_TEST',
+                        'name' => 'DIGITAL_FEMSA_PRIVATE_KEY_TEST',
                         'required' => true,
                     ],
                     [
                         'type' => 'text',
                         'label' => $this->trans('Test Public Key', [], 'Modules.DigitalFemsa.Admin'),
-                        'name' => 'FEMSA_DIGITAL_PUBLIC_KEY_TEST',
+                        'name' => 'DIGITAL_FEMSA_PUBLIC_KEY_TEST',
                         'required' => true,
                     ],
                     [
                         'type' => 'text',
                         'label' => $this->trans('Live Private Key', [], 'Modules.DigitalFemsa.Admin'),
-                        'name' => 'FEMSA_DIGITAL_PRIVATE_KEY_LIVE',
+                        'name' => 'DIGITAL_FEMSA_PRIVATE_KEY_LIVE',
                         'required' => true,
                     ],
                     [
                         'type' => 'text',
                         'label' => $this->trans('Live Public Key', [], 'Modules.DigitalFemsa.Admin'),
-                        'name' => 'FEMSA_DIGITAL_PUBLIC_KEY_LIVE',
+                        'name' => 'DIGITAL_FEMSA_PUBLIC_KEY_LIVE',
                         'required' => true,
                     ],
                     [
@@ -1153,13 +1153,13 @@ class OxxoPay extends PaymentModule
      */
     public function checkSettings()
     {
-        $mode = Tools::getValue('FEMSA_DIGITAL_MODE');
-        $valid = !empty(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_LIVE'))
-            && !empty(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_LIVE'));
+        $mode = Tools::getValue('DIGITAL_FEMSA_MODE');
+        $valid = !empty(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_LIVE'))
+            && !empty(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_LIVE'));
 
         if (!$mode) {
-            $valid = !empty(Tools::getValue('FEMSA_DIGITAL_PUBLIC_KEY_TEST'))
-                && !empty(Tools::getValue('FEMSA_DIGITAL_PRIVATE_KEY_TEST'));
+            $valid = !empty(Tools::getValue('DIGITAL_FEMSA_PUBLIC_KEY_TEST'))
+                && !empty(Tools::getValue('DIGITAL_FEMSA_PRIVATE_KEY_TEST'));
         }
 
         return $valid;
@@ -1180,7 +1180,7 @@ class OxxoPay extends PaymentModule
             ];
         }
 
-        if (Tools::getValue('FEMSA_DIGITAL_MODE')
+        if (Tools::getValue('DIGITAL_FEMSA_MODE')
             && (!Configuration::get('PS_SSL_ENABLED')
                 || (!empty(filter_input(INPUT_SERVER, 'HTTPS'))
                     && Tools::strtolower(filter_input(INPUT_SERVER, 'HTTPS')) === 'off'))
@@ -1223,7 +1223,7 @@ class OxxoPay extends PaymentModule
         // CODE FOR WEBHOOK VALIDATION UNTESTED DONT ERASE
 
         $this->smarty->assign('base_uri', __PS_BASE_URI__);
-        $this->smarty->assign('mode', Configuration::get('FEMSA_DIGITAL_MODE'));
+        $this->smarty->assign('mode', Configuration::get('DIGITAL_FEMSA_MODE'));
 
         $this->html = '';
 
@@ -1246,11 +1246,11 @@ class OxxoPay extends PaymentModule
             }
 
             if (count($errors) <= 0 && $requirements['result']) {
-                $oldWebHook = Configuration::get('FEMSA_DIGITAL_WEBHOOK');
+                $oldWebHook = Configuration::get('DIGITAL_FEMSA_WEBHOOK');
                 $this->postProcess();
 
                 if (!$this->createWebhook($oldWebHook)) {
-                    $webhookMessage = Configuration::get('FEMSA_DIGITAL_WEBHOOK_ERROR_MESSAGE');
+                    $webhookMessage = Configuration::get('DIGITAL_FEMSA_WEBHOOK_ERROR_MESSAGE');
                     $this->smarty->assign('error_webhook_message', $webhookMessage);
                 }
             }
@@ -1275,10 +1275,10 @@ class OxxoPay extends PaymentModule
         try {
             $customerConekta = \DigitalFemsa\Customer::create($params);
 
-            DigitalFemsaDatabase::updateConektaMetadata(
+            DigitalFemsaDatabase::updateDigitalFemsaMetadata(
                 $customer->id,
                 $this->conektaMode,
-                'conekta_customer_id',
+                'digital_femsa_customer_id',
                 $customerConekta->id
             );
 
@@ -1295,12 +1295,12 @@ class OxxoPay extends PaymentModule
      */
     private function createWebhook(string $oldWebhook): bool
     {
-        $key = Configuration::get('FEMSA_DIGITAL_MODE') ? Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_LIVE')
-            : Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST');
+        $key = Configuration::get('DIGITAL_FEMSA_MODE') ? Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_LIVE')
+            : Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST');
         $isoCode = $this->context->language->iso_code;
 
         return (new CreateWebhook())(
-            Configuration::get('FEMSA_DIGITAL_MODE'),
+            Configuration::get('DIGITAL_FEMSA_MODE'),
             $key,
             $isoCode,
             $this->version,
@@ -1332,7 +1332,7 @@ class OxxoPay extends PaymentModule
                 'action' => $this->context->link->getModuleLink($this->name, 'validation', [], true),
                 'months' => $months,
                 'years' => $years,
-                'test_private_key' => Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST'),
+                'test_private_key' => Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST'),
                 'path' => $this->_path,
             ]
         );
@@ -1343,25 +1343,25 @@ class OxxoPay extends PaymentModule
     /**
      * Payment process and validates if the payment was made correctly
      *
-     * @param $conektaOrderId The id of the order to pay
+     * @param $digitalFemsaOrderId The id of the order to pay
      *
      * @return string link redirect
      */
-    public function processPayment($conektaOrderId)
+    public function processPayment($digitalFemsaOrderId)
     {
-        $key = Configuration::get('FEMSA_DIGITAL_MODE') ?
-            Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_LIVE') :
-            Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST');
+        $key = Configuration::get('DIGITAL_FEMSA_MODE') ?
+            Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_LIVE') :
+            Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST');
         $iso_code = $this->context->language->iso_code;
 
-        \DigitalFemsa\Conekta::setApiKey($key);
-        \DigitalFemsa\Conekta::setPlugin('Prestashop 1.7');
-        \DigitalFemsa\Conekta::setApiVersion('2.0.0');
-        \DigitalFemsa\Conekta::setPluginVersion($this->version);
-        \DigitalFemsa\Conekta::setLocale($iso_code);
+        \DigitalFemsa\DigitalFemsa::setApiKey($key);
+        \DigitalFemsa\DigitalFemsa::setPlugin('Prestashop 1.7');
+        \DigitalFemsa\DigitalFemsa::setApiVersion('2.0.0');
+        \DigitalFemsa\DigitalFemsa::setPluginVersion($this->version);
+        \DigitalFemsa\DigitalFemsa::setLocale($iso_code);
 
         try {
-            $order = \DigitalFemsa\Order::find($conektaOrderId->id);
+            $order = \DigitalFemsa\Order::find($digitalFemsaOrderId->id);
             $charge_response = $order->charges[0];
             $order_status = (int) Configuration::get('PS_OS_PAYMENT');
             $createAtDate = new DateTime();
@@ -1411,7 +1411,7 @@ class OxxoPay extends PaymentModule
                 $this->context->cart->id
             );
 
-            DigitalFemsaDatabase::updateConektaOrder(
+            DigitalFemsaDatabase::updateDigitalFemsaOrder(
                 $this->context->customer->id,
                 $this->context->cart->id,
                 $this->conektaMode,
@@ -1450,7 +1450,7 @@ class OxxoPay extends PaymentModule
             $controller = Configuration::get('PS_ORDER_PROCESS_TYPE') ? 'order-opc.php' : 'order.php';
             $location = $this->context->link->getPageLink($controller, true)
                 . (strpos($controller, '?') !== false ? '&' : '?')
-                . 'step=3&conekta_error=1&message=' . $message . '#conekta_error';
+                . 'step=3&digital_femsa_error=1&message=' . $message . '#digital_femsa_error';
 
             Tools::redirectLink($location);
         }
@@ -1489,12 +1489,12 @@ class OxxoPay extends PaymentModule
      */
     public function getTransactionStatus($order_id)
     {
-        if (DigitalFemsaDatabase::getOrderConekta($order_id) == $this->name) {
-            $conekta_tran_details = DigitalFemsaDatabase::getConektaTransaction($order_id);
+        if (DigitalFemsaDatabase::getOrderDigitalFemsa($order_id) == $this->name) {
+            $digital_femsa_tran_details = DigitalFemsaDatabase::getDigitalFemsaTransaction($order_id);
 
-            $this->smarty->assign('conekta_tran_details', $conekta_tran_details);
+            $this->smarty->assign('digital_femsa_tran_details', $digital_femsa_tran_details);
 
-            if ($conekta_tran_details['status'] === 'paid') {
+            if ($digital_femsa_tran_details['status'] === 'paid') {
                 $this->smarty->assign('color_status', 'green');
                 $this->smarty->assign('message_status', $this->l('Paid'));
             } else {
@@ -1503,14 +1503,14 @@ class OxxoPay extends PaymentModule
             }
             $this->smarty->assign(
                 'display_price',
-                Tools::displayPrice($conekta_tran_details['amount'])
+                Tools::displayPrice($digital_femsa_tran_details['amount'])
             );
             $this->smarty->assign(
                 'processed_on',
-                Tools::safeOutput($conekta_tran_details['date_add'])
+                Tools::safeOutput($digital_femsa_tran_details['date_add'])
             );
 
-            if ($conekta_tran_details['mode'] === 'live') {
+            if ($digital_femsa_tran_details['mode'] === 'live') {
                 $this->smarty->assign('color_mode', 'green');
                 $this->smarty->assign('txt_mode', $this->l('Live'));
             } else {

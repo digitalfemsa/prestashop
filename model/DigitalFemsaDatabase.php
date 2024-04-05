@@ -21,13 +21,13 @@
 /**
  * Database Class Doc Comment
  *
- * @author   Conekta <support@conekta.io>
+ * @author   DigitalFemsa <support@digitalfemsa.io>
  *
  * @category Class
  *
  * @license  http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @see     https://conekta.com/
+ * @see     https://digitalfemsa.io/
  */
 class DigitalFemsaDatabase
 {
@@ -38,7 +38,7 @@ class DigitalFemsaDatabase
      *
      * @return array|string
      */
-    public static function getOrderConekta($order_id)
+    public static function getOrderDigitalFemsa($order_id)
     {
         return Db::getInstance()->getValue(
             'SELECT module FROM ' . _DB_PREFIX_ . 'orders '
@@ -53,10 +53,10 @@ class DigitalFemsaDatabase
      *
      * @return array
      */
-    public static function getConektaTransaction($order_id)
+    public static function getDigitalFemsaTransaction($order_id)
     {
         return Db::getInstance()->getRow(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'conekta_transaction '
+            'SELECT * FROM ' . _DB_PREFIX_ . 'digital_femsa_transaction '
             . 'WHERE id_order = ' . pSQL((int) $order_id)
             . ' AND type = \'payment\''
         );
@@ -76,8 +76,8 @@ class DigitalFemsaDatabase
     public static function insertOxxoPayment($order, $charge_response, $reference, $currentOrder, $cartId)
     {
         return Db::getInstance()->Execute(
-            'INSERT INTO ' . _DB_PREFIX_ . 'conekta_transaction ('
-            . 'type, id_cart, id_order, id_conekta_order, id_transaction, amount,'
+            'INSERT INTO ' . _DB_PREFIX_ . 'digital_femsa_transaction ('
+            . 'type, id_cart, id_order, id_digital_femsa_order, id_transaction, amount,'
             . 'status, currency, mode, date_add, reference, barcode, captured)'
             . 'VALUES (\'payment\', ' . pSQL((int) $cartId) . ', ' . pSQL((int) $currentOrder) . ', \''
             . pSQL($order->id) . '\', \'' . pSQL($charge_response->id) . '\',\''
@@ -91,7 +91,7 @@ class DigitalFemsaDatabase
     }
 
     /**
-     * Create table ps_conekta_transaction
+     * Create table ps_digital_femsa_transaction
      *
      * @return bool
      */
@@ -99,12 +99,12 @@ class DigitalFemsaDatabase
     {
         return
             Db::getInstance()->execute(
-                'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'conekta_transaction` (
-                `id_conekta_transaction` int(11) NOT NULL AUTO_INCREMENT,
+                'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'digital_femsa_transaction` (
+                `id_digital_femsa_transaction` int(11) NOT NULL AUTO_INCREMENT,
                 `type` enum(\'payment\',\'refund\') NOT NULL,
                 `id_cart` int(10) unsigned NOT NULL,
                 `id_order` int(10) unsigned NOT NULL,
-                `id_conekta_order` varchar(32) NOT NULL,
+                `id_digital_femsa_order` varchar(32) NOT NULL,
                 `id_transaction` varchar(32) NOT NULL,
                 `amount` decimal(10,2) NOT NULL,
                 `status` enum(\'paid\',\'unpaid\') NOT NULL,
@@ -114,7 +114,7 @@ class DigitalFemsaDatabase
                 `reference` varchar(30) NOT NULL,
                 `barcode` varchar(230) NOT NULL,
                 `captured` tinyint(1) NOT NULL DEFAULT \'1\',
-                PRIMARY KEY (`id_conekta_transaction`),
+                PRIMARY KEY (`id_digital_femsa_transaction`),
                 KEY `idx_transaction` (`type`,`id_order`,`status`))
                 ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8 AUTO_INCREMENT=1'
             )
@@ -122,22 +122,22 @@ class DigitalFemsaDatabase
     }
 
     /**
-     * Create table ps_conekta_metadata
+     * Create table ps_digital_femsa_metadata
      *
      * @return bool
      */
     public static function createTableMetaData()
     {
-        $table = _DB_PREFIX_ . 'conekta_metadata';
+        $table = _DB_PREFIX_ . 'digital_femsa_metadata';
         $sql = "CREATE TABLE IF NOT EXISTS $table (
-            id_conekta_metadata int(11) NOT NULL AUTO_INCREMENT,
+            id_digital_femsa_metadata int(11) NOT NULL AUTO_INCREMENT,
             id_user int(11) unsigned NOT NULL,
             `mode` enum(\"live\",\"test\") NOT NULL,
             meta_option varchar(32) NOT NULL,
             meta_value varchar(128) NOT NULL,
-            PRIMARY KEY (id_conekta_metadata),
+            PRIMARY KEY (id_digital_femsa_metadata),
             KEY id_user (id_user),
-            KEY id_conekta_metadata (id_conekta_metadata)
+            KEY id_digital_femsa_metadata (id_digital_femsa_metadata)
             )
             ENGINE=" . _MYSQL_ENGINE_ . 'DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
@@ -145,21 +145,21 @@ class DigitalFemsaDatabase
     }
 
     /**
-     * Create table ps_conekta_product_data
+     * Create table ps_digital_femsa_product_data
      *
      * @return bool
      */
     public static function createTableProductData()
     {
-        $table = _DB_PREFIX_ . 'conekta_product_data';
+        $table = _DB_PREFIX_ . 'digital_femsa_product_data';
         $sql = "CREATE TABLE IF NOT EXISTS $table (
-            id_conekta_product_data int(11) NOT NULL AUTO_INCREMENT,
+            id_digital_femsa_product_data int(11) NOT NULL AUTO_INCREMENT,
             id_product int(11) unsigned NOT NULL,
             product_attribute varchar(32) NOT NULL,
             product_value varchar(128) NOT NULL,
-            PRIMARY KEY (id_conekta_product_data),
+            PRIMARY KEY (id_digital_femsa_product_data),
             KEY id_product (id_product),
-            KEY id_conekta_product_data (id_conekta_product_data)
+            KEY id_digital_femsa_product_data (id_digital_femsa_product_data)
             )
             ENGINE=" . _MYSQL_ENGINE_ . 'DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
@@ -167,19 +167,19 @@ class DigitalFemsaDatabase
     }
 
     /**
-     * Create table ps_conekta_order_checkout
+     * Create table ps_digital_femsa_order_checkout
      *
      * @return bool
      */
-    public static function createTableConektaOrder()
+    public static function createTableDigitalFemsaOrder()
     {
-        $table = _DB_PREFIX_ . 'conekta_order_checkout';
+        $table = _DB_PREFIX_ . 'digital_femsa_order_checkout';
         $sql = "CREATE TABLE IF NOT EXISTS $table (
             id int(11) NOT NULL AUTO_INCREMENT,
             id_user int(11) unsigned NOT NULL,
             id_cart int(11) unsigned NOT NULL,
             `mode` enum(\"live\",\"test\") NOT NULL,
-            id_conekta_order varchar(32) NOT NULL,
+            id_digital_femsa_order varchar(32) NOT NULL,
             `status` enum(\"paid\",\"pre_authorized\",\"unpaid\",\"pending_payment\",\"expired\",\"voided\","
             . '"fraudulent","preauthorized","canceled","pending_confirmation","charged_back",'
             . '"partially_refunded","refunded","reversed","approved","declined","in_review",'
@@ -189,7 +189,7 @@ class DigitalFemsaDatabase
             KEY id_user (id_user),
             KEY id_cart (id_cart),
             KEY id (id),
-            KEY id_conekta_order (id_conekta_order)
+            KEY id_digital_femsa_order (id_digital_femsa_order)
             )
             ENGINE=' . _MYSQL_ENGINE_ . 'DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
@@ -206,7 +206,7 @@ class DigitalFemsaDatabase
     public static function getOrderById($id_order)
     {
         return Db::getInstance()->getRow(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'conekta_transaction '
+            'SELECT * FROM ' . _DB_PREFIX_ . 'digital_femsa_transaction '
             . 'WHERE id_order = ' . pSQL((int) $id_order) . ';'
         );
     }
@@ -220,9 +220,9 @@ class DigitalFemsaDatabase
      *
      * @return array|string
      */
-    public static function getConektaMetadata($user_id, $mode, $meta_options)
+    public static function getDigitalFemsaMetadata($user_id, $mode, $meta_options)
     {
-        $table = _DB_PREFIX_ . 'conekta_metadata';
+        $table = _DB_PREFIX_ . 'digital_femsa_metadata';
 
         $sql = "SELECT meta_value FROM  $table WHERE id_user = '{$user_id}' "
         . "AND meta_option = '{$meta_options}' "
@@ -239,9 +239,9 @@ class DigitalFemsaDatabase
      *
      * @return array|string
      */
-    public static function getConektaProductData($id_product, $product_attribute)
+    public static function getDigitalFemsaProductData($id_product, $product_attribute)
     {
-        $table = _DB_PREFIX_ . 'conekta_product_data';
+        $table = _DB_PREFIX_ . 'digital_femsa_product_data';
 
         $sql = "SELECT product_value FROM  $table WHERE id_product = '{$id_product}' "
         . "AND product_attribute = '{$product_attribute}' ";
@@ -258,7 +258,7 @@ class DigitalFemsaDatabase
      */
     public static function getProductIdProductData($product_value)
     {
-        $table = _DB_PREFIX_ . 'conekta_product_data';
+        $table = _DB_PREFIX_ . 'digital_femsa_product_data';
 
         $sql = "SELECT id_product FROM $table WHERE product_value = '{$product_value}'";
 
@@ -275,11 +275,11 @@ class DigitalFemsaDatabase
      *
      * @return bool
      */
-    public static function updateConektaMetadata($user_id, $mode, $meta_options, $meta_value)
+    public static function updateDigitalFemsaMetadata($user_id, $mode, $meta_options, $meta_value)
     {
-        $table = _DB_PREFIX_ . 'conekta_metadata';
+        $table = _DB_PREFIX_ . 'digital_femsa_metadata';
 
-        if (empty(DigitalFemsaDatabase::getConektaMetadata($user_id, $mode, $meta_options))) {
+        if (empty(DigitalFemsaDatabase::getDigitalFemsaMetadata($user_id, $mode, $meta_options))) {
             $sql = "INSERT INTO $table(id_user, mode, meta_option, meta_value) "
             . "VALUES ('{$user_id}','{$mode}','{$meta_options}','{$meta_value}')";
         } else {
@@ -300,11 +300,11 @@ class DigitalFemsaDatabase
      *
      * @return bool
      */
-    public static function updateConektaProductData($id_product, $product_attribute, $product_value)
+    public static function updateDigitalFemsaProductData($id_product, $product_attribute, $product_value)
     {
-        $table = _DB_PREFIX_ . 'conekta_product_data';
+        $table = _DB_PREFIX_ . 'digital_femsa_product_data';
 
-        if (empty(self::getConektaProductData($id_product, $product_attribute))) {
+        if (empty(self::getDigitalFemsaProductData($id_product, $product_attribute))) {
             $sql = "INSERT INTO $table(id_product, product_attribute, product_value) "
             . "VALUES ('{$id_product}','{$product_attribute}','{$product_value}')";
         } else {
@@ -324,11 +324,11 @@ class DigitalFemsaDatabase
      *
      * @return array|string
      */
-    public static function getConektaOrder($user_id, $mode, $cart_id)
+    public static function getDigitalFemsaOrder($user_id, $mode, $cart_id)
     {
-        $table = _DB_PREFIX_ . 'conekta_order_checkout';
+        $table = _DB_PREFIX_ . 'digital_femsa_order_checkout';
 
-        $sql = "SELECT id_conekta_order, `status` FROM  $table WHERE id_user = '{$user_id}' "
+        $sql = "SELECT id_digital_femsa_order, `status` FROM  $table WHERE id_user = '{$user_id}' "
         . "AND `mode` = '{$mode}'  AND `status` = 'unpaid' AND id_cart ='{$cart_id}'";
 
         return Db::getInstance()->getRow($sql);
@@ -340,21 +340,21 @@ class DigitalFemsaDatabase
      * @param int $user_id User ID
      * @param int $cart_id Cart ID
      * @param string $mode Mode (Production or Test)
-     * @param string $id_conekta_order Order ID generate for DigitalFemsa
+     * @param string $id_digital_femsa_order Order ID generate for DigitalFemsa
      * @param string $status Order status
      *
      * @return bool
      */
-    public static function updateConektaOrder($user_id, $cart_id, $mode, $id_conekta_order, $status)
+    public static function updateDigitalFemsaOrder($user_id, $cart_id, $mode, $id_digital_femsa_order, $status)
     {
-        $table = _DB_PREFIX_ . 'conekta_order_checkout';
+        $table = _DB_PREFIX_ . 'digital_femsa_order_checkout';
 
-        if (empty(DigitalFemsaDatabase::getConektaOrder($user_id, $mode, $cart_id))) {
-            $sql = "INSERT INTO $table(id_user,	id_cart, mode, id_conekta_order, `status`) "
-            . "VALUES ('{$user_id}','{$cart_id}','{$mode}','{$id_conekta_order}', '{$status}')";
+        if (empty(DigitalFemsaDatabase::getDigitalFemsaOrder($user_id, $mode, $cart_id))) {
+            $sql = "INSERT INTO $table(id_user,	id_cart, mode, id_digital_femsa_order, `status`) "
+            . "VALUES ('{$user_id}','{$cart_id}','{$mode}','{$id_digital_femsa_order}', '{$status}')";
         } else {
             $sql = "UPDATE $table SET `status` = '{$status}' WHERE id_user = '{$user_id}' "
-            . "AND id_cart = '{$cart_id}' AND id_conekta_order = '{$id_conekta_order}' AND `mode` = '{$mode}'";
+            . "AND id_cart = '{$cart_id}' AND id_digital_femsa_order = '{$id_digital_femsa_order}' AND `mode` = '{$mode}'";
         }
 
         return Db::getInstance()->Execute($sql);

@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Event extends ConektaResource
+class Event extends DigitalFemsaResource
 {
     public $data = '';
 

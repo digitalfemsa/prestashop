@@ -20,23 +20,15 @@
 
 namespace DigitalFemsa;
 
-/**
- * @method string apiUrl($urls string)
- * @method array() additionalPluginHeaders()
- * @method array() setHeaders()
- * @method json request($method string, $url string, $params array())
- * @method string buildQueryParamsUrl($url string, $params arraay())
- * @method string buildSegmentParamsUrl($url string, $params arraay())
- */
 class Requestor
 {
     public $apiKey;
 
     public function __construct()
     {
-        $this->apiKey = Conekta::$apiKey;
-        $this->apiVersion = Conekta::$apiVersion;
-        $this->plugin = Conekta::$plugin;
+        $this->apiKey = DigitalFemsa::$apiKey;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
+        $this->plugin = DigitalFemsa::$plugin;
     }
 
     /**
@@ -50,7 +42,7 @@ class Requestor
      */
     public static function apiUrl($url = '')
     {
-        $apiBase = Conekta::$apiBase;
+        $apiBase = DigitalFemsa::$apiBase;
 
         return $apiBase . $url;
     }
@@ -65,9 +57,9 @@ class Requestor
     private function additionalPluginHeaders()
     {
         return [
-      'plugin_name' => Conekta::getPlugin(),
-      'plugin_version' => Conekta::getPluginVersion(),
-    ];
+          'plugin_name' => DigitalFemsa::getPlugin(),
+          'plugin_version' => DigitalFemsa::getPluginVersion(),
+        ];
     }
 
     /**
@@ -81,25 +73,25 @@ class Requestor
     {
         $pluginAgent = $this->additionalPluginHeaders();
         $userAgent = [
-      'bindings_version' => Conekta::VERSION,
-      'lang' => 'php',
-      'lang_version' => phpversion(),
-      'publisher' => 'conekta',
-      'uname' => php_uname(),
-      ];
+          'bindings_version' => DigitalFemsa::VERSION,
+          'lang' => 'php',
+          'lang_version' => phpversion(),
+          'publisher' => 'conekta',
+          'uname' => php_uname(),
+        ];
 
         if (array_filter($pluginAgent)) {
             $userAgent = array_merge($userAgent, $pluginAgent);
         }
 
         $headers = [
-      'Accept: application/vnd.conekta-v' . Conekta::$apiVersion . '+json',
-      'Accept-Language: ' . Conekta::$locale,
-      'X-DigitalFemsa-Client-User-Agent: ' . json_encode($userAgent),
-      'User-Agent: DigitalFemsa/v1 PhpBindings/' . Conekta::VERSION,
-      'Authorization: Basic ' . base64_encode($this->apiKey . ':'),
-      'Content-Type: application/json',
-      ];
+          'Accept: application/vnd.conekta-v' . DigitalFemsa::$apiVersion . '+json',
+          'Accept-Language: ' . DigitalFemsa::$locale,
+          'X-DigitalFemsa-Client-User-Agent: ' . json_encode($userAgent),
+          'User-Agent: DigitalFemsa/v1 PhpBindings/' . DigitalFemsa::VERSION,
+          'Authorization: Basic ' . base64_encode($this->apiKey . ':'),
+          'Content-Type: application/json',
+        ];
 
         return $headers;
     }

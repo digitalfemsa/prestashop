@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-abstract class Conekta
+abstract class DigitalFemsa
 {
     public static $apiKey;
 

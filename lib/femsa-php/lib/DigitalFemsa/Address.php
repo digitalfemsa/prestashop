@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Address extends ConektaResource
+class Address extends DigitalFemsaResource
 {
     public $street1 = '';
 

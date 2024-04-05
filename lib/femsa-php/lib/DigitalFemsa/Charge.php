@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Charge extends ConektaResource
+class Charge extends DigitalFemsaResource
 {
     public $livemode = '';
 

@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Log extends ConektaResource
+class Log extends DigitalFemsaResource
 {
     public $method = '';
 

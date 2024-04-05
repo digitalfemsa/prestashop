@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class ConektaList extends ConektaObject
+class DigitalFemsaList extends DigitalFemsaObject
 {
     public const LIMIT = 5;
 
@@ -34,7 +34,7 @@ class ConektaList extends ConektaObject
 
     public function addElement($element)
     {
-        $element = Util::convertToConektaObject($element);
+        $element = Util::convertToFemsaDigitalObject($element);
         $this[$this->total] = $element;
         $this->_values[$this->total] = $element;
         $this->total = $this->total + 1;
@@ -87,7 +87,7 @@ class ConektaList extends ConektaObject
         }
 
         $class = Util::$types[strtolower($this->elements_type)];
-        $url = ConektaResource::classUrl($class);
+        $url = DigitalFemsaResource::classUrl($class);
         $requestor = new Requestor();
         $response = $requestor->request('get', $url, $this->params);
 

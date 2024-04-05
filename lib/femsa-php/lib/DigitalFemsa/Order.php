@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Order extends ConektaResource
+class Order extends DigitalFemsaResource
 {
     public $livemode = '';
 
@@ -64,7 +64,7 @@ class Order extends ConektaResource
 
         foreach ($submodels as $submodel) {
             if (isset($values[$submodel])) {
-                $submodelList = new ConektaList($submodel);
+                $submodelList = new DigitalFemsaList($submodel);
                 $submodelList->loadFromArray($values[$submodel]);
                 $this->$submodel->_values = $submodelList;
                 $this->$submodel = $submodelList;
@@ -73,7 +73,7 @@ class Order extends ConektaResource
                     $val->order = $this;
                 }
             } else {
-                $this->$submodel = new ConektaList($submodel, []);
+                $this->$submodel = new DigitalFemsaList($submodel, []);
             }
         }
     }

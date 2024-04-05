@@ -20,6 +20,6 @@
 
 namespace DigitalFemsa;
 
-class PaymentMethod extends ConektaResource
+class PaymentMethod extends DigitalFemsaResource
 {
 }

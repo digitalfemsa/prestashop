@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-abstract class ConektaResource extends ConektaObject
+abstract class DigitalFemsaResource extends DigitalFemsaObject
 {
     public static function className($class)
     {
@@ -49,7 +49,7 @@ abstract class ConektaResource extends ConektaObject
     public static function classUrl($class = null)
     {
         if (empty($class)) {
-            throw new NoConnectionError(Lang::translate('error.resource.id', Lang::EN, ['RESOURCE' => 'NULL']), Lang::translate('error.resource.id_purchaser', Conekta::$locale));
+            throw new NoConnectionError(Lang::translate('error.resource.id', Lang::EN, ['RESOURCE' => 'NULL']), Lang::translate('error.resource.id_purchaser', DigitalFemsa::$locale));
         }
         $base = self::_getBase($class, 'className', $class);
 
@@ -58,11 +58,11 @@ abstract class ConektaResource extends ConektaObject
 
     protected static function _scpWhere($class, $params)
     {
-        if (Conekta::$apiVersion == '2.0.0') {
+        if (DigitalFemsa::$apiVersion == '2.0.0') {
             $path = explode('\\', $class);
-            $instance = new ConektaList(array_pop($path));
+            $instance = new DigitalFemsaList(array_pop($path));
         } else {
-            $instance = new ConektaObject();
+            $instance = new DigitalFemsaObject();
         }
         $requestor = new Requestor();
         $url = self::classUrl($class);
@@ -110,10 +110,10 @@ abstract class ConektaResource extends ConektaObject
         if (!$id) {
             $error = new ParameterValidationError(
                 Lang::translate('error.resource.id', Lang::EN, ['RESOURCE' => get_class()]),
-                Lang::translate('error.resource.id_purchaser', Conekta::$locale)
+                Lang::translate('error.resource.id_purchaser', DigitalFemsa::$locale)
             );
 
-            if (Conekta::$apiVersion == '2.0.0') {
+            if (DigitalFemsa::$apiVersion == '2.0.0') {
                 $handler = new Handler();
                 $handler = $error;
 
@@ -131,7 +131,7 @@ abstract class ConektaResource extends ConektaObject
         if (isset($parent) && isset($member)) {
             $obj = $this->$parent->$member;
 
-            if (strpos(get_class($obj), 'ConektaObject') !== false) {
+            if (strpos(get_class($obj), 'DigitalFemsaObject') !== false) {
                 foreach ($this->$parent->$member as $k => $v) {
                     if (strpos($v->id, $this->id) !== false) {
                         $this->$parent->$member->_values = Util::shiftArray($this->$parent->$member->_values, $k);
@@ -164,14 +164,14 @@ abstract class ConektaResource extends ConektaObject
         $response = $requestor->request('post', $url, $params);
 
         if (strpos(get_class($this->$member), 'ConektaList') !== false ||
-      strpos(get_class($this->$member), 'ConektaObject') !== false ||
+      strpos(get_class($this->$member), 'DigitalFemsaObject') !== false ||
       strpos($member, 'cards') !== false ||
       strpos($member, 'payout_methods') !== false) {
             if (empty($this->$member)) {
-                if (Conekta::$apiVersion == '2.0.0') {
-                    $this->$member = new ConektaList($member);
+                if (DigitalFemsa::$apiVersion == '2.0.0') {
+                    $this->$member = new DigitalFemsaList($member);
                 } else {
-                    $this->$member = new ConektaObject();
+                    $this->$member = new DigitalFemsaObject();
                 }
             }
 

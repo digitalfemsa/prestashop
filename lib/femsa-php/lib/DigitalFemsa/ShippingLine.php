@@ -20,11 +20,11 @@
 
 namespace DigitalFemsa;
 
-class ShippingLine extends ConektaResource
+class ShippingLine extends DigitalFemsaResource
 {
     public function instanceUrl()
     {
-        $this->apiVersion = Conekta::$apiVersion;
+        $this->apiVersion = DigitalFemsa::$apiVersion;
         $id = $this->id;
         parent::idValidator($id);
         $class = get_class($this);

@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Customer extends ConektaResource
+class Customer extends DigitalFemsaResource
 {
     public $livemode = '';
 
@@ -62,18 +62,18 @@ class Customer extends ConektaResource
             parent::loadFromArray($values);
         }
 
-        if (Conekta::$apiVersion == '2.0.0') {
+        if (DigitalFemsa::$apiVersion == '2.0.0') {
             $submodels = [
         'payment_sources', 'shipping_contacts',
       ];
 
             foreach ($submodels as $submodel) {
                 if (isset($values[$submodel])) {
-                    $submodel_list = new ConektaList($submodel, $values[$submodel]);
+                    $submodel_list = new DigitalFemsaList($submodel, $values[$submodel]);
                     $submodel_list->loadFromArray($values[$submodel]);
                     $this->$submodel->_values = $submodel_list;
                 } else {
-                    $submodel_list = new ConektaList($submodel, []);
+                    $submodel_list = new DigitalFemsaList($submodel, []);
                 }
                 $this->$submodel = $submodel_list;
 
@@ -141,7 +141,7 @@ class Customer extends ConektaResource
 
     public function deletePaymentSourceById($paymentSourceId)
     {
-        if (Conekta::$apiVersion == '2.0.0') {
+        if (DigitalFemsa::$apiVersion == '2.0.0') {
             $currentCustomer = $this;
             $paymentSources = $currentCustomer->payment_sources;
             $index = 0;

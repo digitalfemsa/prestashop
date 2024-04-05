@@ -58,8 +58,8 @@ class Handler extends Exception
     {
         if (isset($httpCode) != true || $httpCode == 0) {
             return new NoConnectionError(
-                Lang::translate('error.requestor.connection', Lang::EN, ['BASE' => Conekta::$apiBase]),
-                Lang::translate('error.requestor.connection_purchaser', Conekta::$locale)
+                Lang::translate('error.requestor.connection', Lang::EN, ['BASE' => DigitalFemsa::$apiBase]),
+                Lang::translate('error.requestor.connection_purchaser', DigitalFemsa::$locale)
             );
         }
         $type = self::assignIfSet($resp, 'type');

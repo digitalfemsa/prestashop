@@ -20,7 +20,7 @@
 
 namespace DigitalFemsa;
 
-class Webhook extends ConektaResource
+class Webhook extends DigitalFemsaResource
 {
     public static function find($id)
     {

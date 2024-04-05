@@ -64,8 +64,8 @@ $(document).ready (function($) {
 		},
 		onFinalizePayment: function(event) {
 			var $form = $('#conekta-payment-form');
-			$form.append($('<input type="hidden" name="conektaOrdenID" id="conektaOrdenID" />').val(conekta_order_id));
-			$form.append($('<input type="hidden" name="conektAmount" id="conektAmount" />').val(conekta_amount));
+			$form.append($('<input type="hidden" name="digital_femsa_orden_id" id="digital_femsa_orden_id" />').val(conekta_order_id));
+			$form.append($('<input type="hidden" name="digital_femsa_mount" id="digital_femsa_mount" />').val(conekta_amount));
 			$form.append($('<input type="hidden" name="chargeId" id="chargeId" />').val(event.charge.id));
 			$form.append($('<input type="hidden" name="charge_currency" id="charge_currency" />').val(event.charge.currency));
 			$form.append($('<input type="hidden" name="charge_status" id="charge_status" />').val(event.charge.status));
