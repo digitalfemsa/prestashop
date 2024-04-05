@@ -163,7 +163,7 @@ abstract class DigitalFemsaResource extends DigitalFemsaObject
         $url = $this->instanceUrl() . '/' . $member;
         $response = $requestor->request('post', $url, $params);
 
-        if (strpos(get_class($this->$member), 'ConektaList') !== false ||
+        if (strpos(get_class($this->$member), 'DigitalFemsaList') !== false ||
       strpos(get_class($this->$member), 'DigitalFemsaObject') !== false ||
       strpos($member, 'cards') !== false ||
       strpos($member, 'payout_methods') !== false) {
@@ -175,7 +175,7 @@ abstract class DigitalFemsaResource extends DigitalFemsaObject
                 }
             }
 
-            if (strpos(get_class($this->$member), 'ConektaList') !== false) {
+            if (strpos(get_class($this->$member), 'DigitalFemsaList') !== false) {
                 $this->$member->addElement($response);
             } else {
                 $this->$member->loadFromArray(array_merge(

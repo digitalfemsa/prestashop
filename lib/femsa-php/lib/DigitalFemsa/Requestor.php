@@ -85,10 +85,10 @@ class Requestor
         }
 
         $headers = [
-          'Accept: application/vnd.conekta-v' . DigitalFemsa::$apiVersion . '+json',
+          'Accept: application/vnd.app-v' . DigitalFemsa::$apiVersion . '+json',
           'Accept-Language: ' . DigitalFemsa::$locale,
-          'X-DigitalFemsa-Client-User-Agent: ' . json_encode($userAgent),
-          'User-Agent: DigitalFemsa/v1 PhpBindings/' . DigitalFemsa::VERSION,
+          'X-App-Client-User-Agent: ' . json_encode($userAgent),
+          'User-Agent: App/v1 PhpBindings/' . DigitalFemsa::VERSION,
           'Authorization: Basic ' . base64_encode($this->apiKey . ':'),
           'Content-Type: application/json',
         ];

@@ -24,7 +24,7 @@ abstract class DigitalFemsa
 {
     public static $apiKey;
 
-    public static $apiBase = 'https://api.conekta.io';
+    public static $apiBase = 'https://api.digitalfemsa.io';
 
     public static $apiVersion = '2.0.0';
 

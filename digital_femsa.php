@@ -44,14 +44,14 @@ define('DIGITAL_FEMSA_METADATA_LIMIT', 12);
  *
  * @category Class
  *
- * @author   Conekta <support@conekta.io>
+ * @author   DigitalFemsa <support@digitalfemsa.io>
  * @license  http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @see      https://conekta.com/
+ * @see      https://digitalfemsa.io/
  */
 class DigitalFemsa extends PaymentModule
 {
-    public const ConektaSettings = [
+    public const DigitalFemsaSettings = [
         'DIGITAL_FEMSA_PRESTASHOP_VERSION',
         'DIGITAL_FEMSA_MODE',
         'DIGITAL_FEMSA_PUBLIC_KEY_TEST',
@@ -162,7 +162,7 @@ class DigitalFemsa extends PaymentModule
      */
     public function __construct()
     {
-        $this->name = 'oxxopay';
+        $this->name = 'digital_femsa';
         $this->tab = 'payments_gateways';
         $this->version = '1.0.0';
         $this->ps_versions_compliancy = [
@@ -179,7 +179,7 @@ class DigitalFemsa extends PaymentModule
         $this->cash = true;
         $this->amount_min = 2000;
 
-        $this->settings = array_keys(self::ConektaSettings);
+        $this->settings = array_keys(self::DigitalFemsaSettings);
 
         $this->orderElements = array_keys(
             array_diff_key(get_class_vars('Cart'), ['definition' => '', 'htmlFields' => ''])
@@ -223,7 +223,7 @@ class DigitalFemsa extends PaymentModule
             $this->$attr = $value;
 
             if ($key == 'DIGITAL_FEMSA_MODE') {
-                $this->conektaMode = ($value) ? 'live' : 'test';
+                $this->digitalFemsaMode = ($value) ? 'live' : 'test';
             }
         }
     }
@@ -309,7 +309,7 @@ class DigitalFemsa extends PaymentModule
     {
         $configDeleted = array_filter(array_map(function ($setting) {
             return Configuration::deleteByName($setting);
-        }, self::ConektaSettings), function ($result) {
+        }, self::DigitalFemsaSettings), function ($result) {
             return !$result;
         });
 
@@ -419,11 +419,11 @@ class DigitalFemsa extends PaymentModule
         $state->name = $names;
         $state->color = '#4169E1';
         $state->send_email = true;
-        $state->module_name = 'conekta';
+        $state->module_name = 'digital_femsa';
         $templ = [];
 
         foreach ($languages as $lang) {
-            $templ[$lang['id_lang']] = 'conektaefectivo';
+            $templ[$lang['id_lang']] = 'digital_femsa_efectivo';
         }
 
         $state->template = $templ;
@@ -435,11 +435,11 @@ class DigitalFemsa extends PaymentModule
             if ($dhvalue = opendir($directory)) {
                 while (($file = readdir($dhvalue)) !== false) {
                     if (is_dir($directory . $file) && $file[0] != '.') {
-                        $new_html_file = _PS_MODULE_DIR_ . $this->name . '/mails/' . $file . '/conektaefectivo.html';
-                        $new_txt_file = _PS_MODULE_DIR_ . $this->name . '/mails/' . $file . '/conektaefectivo.txt';
+                        $new_html_file = _PS_MODULE_DIR_ . $this->name . '/mails/' . $file . '/digital_femsa_efectivo.html';
+                        $new_txt_file = _PS_MODULE_DIR_ . $this->name . '/mails/' . $file . '/digital_femsa_efectivo.txt';
 
-                        $html_folder = $directory . $file . '/conektaefectivo.html';
-                        $txt_folder = $directory . $file . '/conektaefectivo.txt';
+                        $html_folder = $directory . $file . '/digital_femsa_efectivo.html';
+                        $txt_folder = $directory . $file . '/digital_femsa_efectivo.txt';
 
                         try {
                             Tools::copy($new_html_file, $html_folder);
@@ -463,7 +463,7 @@ class DigitalFemsa extends PaymentModule
     }
 
     /**
-     * Generate method payment and checkout conekta
+     * Generate method payment and checkout
      *
      * @return template
      */
@@ -491,7 +491,7 @@ class DigitalFemsa extends PaymentModule
                 'ajax_link' => $this->_path . 'ajax.php',
             ]
         );
-        $this->context->controller->addCSS($this->_path . 'views/css/conekta-prestashop.css');
+        $this->context->controller->addCSS($this->_path . 'views/css/digital-femsa-prestashop.css');
 
         if (Configuration::get('DIGITAL_FEMSA_MODE')) {
             $this->smarty->assign('api_key', addslashes(Configuration::get('DIGITAL_FEMSA_PUBLIC_KEY_LIVE')));
@@ -525,7 +525,7 @@ class DigitalFemsa extends PaymentModule
         $shippingContact = DigitalFemsaConfig::getShippingContact($customer, $address_delivery, $state, $country);
         $customerInfo = DigitalFemsaConfig::getCustomerInfo($customer, $address_delivery);
 
-        $result = DigitalFemsaDatabase::getDigitalFemsaMetadata($customer->id, $this->conektaMode, 'digital_femsa_customer_id');
+        $result = DigitalFemsaDatabase::getDigitalFemsaMetadata($customer->id, $this->digitalFemsaMode, 'digital_femsa_customer_id');
 
         if (count($payment_options) > 0
             && !empty($shippingContact['address']['postal_code'])
@@ -537,8 +537,8 @@ class DigitalFemsa extends PaymentModule
                 $customer_id = $this->createCustomer($customer, $customerInfo);
             } else {
                 $customer_id = $result['meta_value'];
-                $customerConekta = \DigitalFemsa\Customer::find($customer_id);
-                $customerConekta->update($customerInfo);
+                $customerDigitalFemsa = \DigitalFemsa\Customer::find($customer_id);
+                $customerDigitalFemsa->update($customerInfo);
             }
 
             $taxlines = DigitalFemsaConfig::getTaxLines($items);
@@ -630,7 +630,7 @@ class DigitalFemsa extends PaymentModule
                 }
             }
 
-            $result = DigitalFemsaDatabase::getDigitalFemsaOrder($customer->id, $this->conektaMode, $this->context->cart->id);
+            $result = DigitalFemsaDatabase::getDigitalFemsaOrder($customer->id, $this->digitalFemsaMode, $this->context->cart->id);
 
             try {
                 if ($order_details['currency'] == 'MXN' && $amount < $this->amount_min) {
@@ -651,7 +651,7 @@ class DigitalFemsa extends PaymentModule
                         DigitalFemsaDatabase::updateDigitalFemsaOrder(
                             $customer->id,
                             $this->context->cart->id,
-                            $this->conektaMode,
+                            $this->digitalFemsaMode,
                             $order->id,
                             $order->charges[0]->status
                         );
@@ -663,7 +663,7 @@ class DigitalFemsa extends PaymentModule
                     DigitalFemsaDatabase::updateDigitalFemsaOrder(
                         $customer->id,
                         $this->context->cart->id,
-                        $this->conektaMode,
+                        $this->digitalFemsaMode,
                         $order->id,
                         'unpaid'
                     );
@@ -675,7 +675,7 @@ class DigitalFemsa extends PaymentModule
                     DigitalFemsaDatabase::updateDigitalFemsaOrder(
                         $customer->id,
                         $this->context->cart->id,
-                        $this->conektaMode,
+                        $this->digitalFemsaMode,
                         $order->id,
                         'unpaid'
                     );
@@ -783,7 +783,7 @@ class DigitalFemsa extends PaymentModule
             ]
         );
         $payment_options = [
-            $this->getConektaPaymentOption()
+            $this->getDigitalFemsaPaymentOption()
         ];
 
         return $payment_options;
@@ -827,11 +827,11 @@ class DigitalFemsa extends PaymentModule
     }
 
     /**
-     * Add conekta payment method
+     * Add payment method
      *
      * @return PaymentOption
      */
-    public function getConektaPaymentOption()
+    public function getDigitalFemsaPaymentOption()
     {
         $embeddedOption = new PaymentOption();
         $embeddedOption->setModuleName($this->name)->setCallToActionText(
@@ -919,7 +919,7 @@ class DigitalFemsa extends PaymentModule
      */
     public function getConfigFieldsValues()
     {
-        $settings = self::ConektaSettings;
+        $settings = self::DigitalFemsaSettings;
         $settingsFieldsValues = [];
 
         array_walk($settings, function ($setting) use (&$settingsFieldsValues) {
@@ -927,7 +927,7 @@ class DigitalFemsa extends PaymentModule
 
             if ($setting === 'DIGITAL_FEMSA_WEBHOOK') {
                 $settingValue = !empty($settingValue) ? $settingValue : Context::getContext()->link->getModuleLink(
-                    'conekta',
+                    'digital_femsa',
                     'notification',
                     ['ajax' => true]
                 );
@@ -1147,7 +1147,7 @@ class DigitalFemsa extends PaymentModule
     }
 
     /**
-     * Check settings key conekta
+     * Check settings keys
      *
      * @return bool
      */
@@ -1198,7 +1198,7 @@ class DigitalFemsa extends PaymentModule
 
         if (!$this->checkSettings()) {
             $testRequirements['configuration'] = [
-                'name' => $this->l('You must sign-up for CONEKTA and configure your account settings in the module'),
+                'name' => $this->l('You must sign-up for DIGITAL_FEMSA and configure your account settings in the module'),
             ];
         }
 
@@ -1273,16 +1273,16 @@ class DigitalFemsa extends PaymentModule
     public function createCustomer($customer, $params)
     {
         try {
-            $customerConekta = \DigitalFemsa\Customer::create($params);
+            $customerDigitalFemsa = \DigitalFemsa\Customer::create($params);
 
             DigitalFemsaDatabase::updateDigitalFemsaMetadata(
                 $customer->id,
-                $this->conektaMode,
+                $this->digitalFemsaMode,
                 'digital_femsa_customer_id',
-                $customerConekta->id
+                $customerDigitalFemsa->id
             );
 
-            return $customerConekta->id;
+            return $customerDigitalFemsa->id;
         } catch (\Exception $e) {
             return null;
         }
@@ -1414,7 +1414,7 @@ class DigitalFemsa extends PaymentModule
             DigitalFemsaDatabase::updateDigitalFemsaOrder(
                 $this->context->customer->id,
                 $this->context->cart->id,
-                $this->conektaMode,
+                $this->digitalFemsaMode,
                 $order->id,
                 $order->charges[0]->status
             );

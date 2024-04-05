@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'conekta/conekta-prestashop',
-        'pretty_version' => '2.3.7',
-        'version' => '2.3.7.0',
-        'reference' => NULL,
+        'name' => 'digitalfemsa/prestashop',
+        'pretty_version' => '1.0.0',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'prestashop-module',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'conekta/conekta-prestashop' => array(
-            'pretty_version' => '2.3.7',
-            'version' => '2.3.7.0',
-            'reference' => NULL,
+        'digitalfemsa/prestashop' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'prestashop-module',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

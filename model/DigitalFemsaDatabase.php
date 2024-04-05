@@ -316,7 +316,7 @@ class DigitalFemsaDatabase
     }
 
     /**
-     * Returns the id of the order created by conekta
+     * Returns the id of the order created
      *
      * @param int $user_id User ID
      * @param string $mode Mode (Production or Test)

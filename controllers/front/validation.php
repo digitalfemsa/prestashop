@@ -85,7 +85,7 @@ class DigitalFemsaValidationModuleFrontController extends ModuleFrontController
 
             $digitalFemsa->processPayment($order);
 
-            $this->setTemplate('module:conekta/views/templates/front/payment_return.tpl');
+            $this->setTemplate('module:digital_femsa/views/templates/front/payment_return.tpl');
         }
     }
 }
