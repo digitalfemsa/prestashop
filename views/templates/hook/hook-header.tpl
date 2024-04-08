@@ -21,8 +21,8 @@
 
 
 <script type="text/javascript">
-	var conekta_public_key = "{$api_key|escape:'htmlall':'UTF-8'}";
-	var conekta_checkout_id = "{$checkoutRequestId|escape:'htmlall':'UTF-8'}";
-	var conekta_order_id = "{$orderID|escape:'htmlall':'UTF-8'}";
-	var conekta_amount = "{$amount|escape:'htmlall':'UTF-8'}";
+	var digital_femsa_public_key = "{$api_key|escape:'htmlall':'UTF-8'}";
+	var digital_femsa_checkout_id = "{$checkoutRequestId|escape:'htmlall':'UTF-8'}";
+	var digital_femsa_order_id = "{$orderID|escape:'htmlall':'UTF-8'}";
+	var digital_femsa_amount = "{$amount|escape:'htmlall':'UTF-8'}";
 </script> 

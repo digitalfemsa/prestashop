@@ -3,7 +3,7 @@ div.payment_module {
   text-transform: none;
 }
 
-.conekta_title img {
+.digital_femsa_title img {
   float: none;
   margin-right: 8px;
   margin-top: -2px;
@@ -42,41 +42,41 @@ p.payment_module a::after {
   color: #777;
 }
 
-div.conekta-payment-module.payment_module.active a,
-p.conekta-payment-module.payment_module.active a::after {
+div.digital_femsa-payment-module.payment_module.active a,
+p.digital_femsa-payment-module.payment_module.active a::after {
   content: "\f078";
   padding-right: 20px;
 }
 
-#conekta-payment-form label {
+#digital_femsa-payment-form label {
   display: inline-block;
   margin-bottom: 4px;
   text-transform: uppercase;
 }
 
-#conekta-payment-form label.lowercase { text-transform: none; }
+#digital_femsa-payment-form label.lowercase { text-transform: none; }
 
-#conekta-payment-form input[type="text"],
-#conekta-payment-form select {
+#digital_femsa-payment-form input[type="text"],
+#digital_femsa-payment-form select {
   border: #ccc solid 1px;
   margin-bottom: 15px;
   padding: 3px;
 }
 
-#conekta-payment-form input[type="checkbox"] { margin-bottom: 15px; }
-#conekta-payment-form input.conekta-card-number { width: 210px; }
+#digital_femsa-payment-form input[type="checkbox"] { margin-bottom: 15px; }
+#digital_femsa-payment-form input.digital_femsa-card-number { width: 210px; }
 
-#conekta-payment-form a {
+#digital_femsa-payment-form a {
   display: inline;
   position: relative;
   border: none;
   padding: 0;
 }
 
-a.conekta-card-cvc-info { font-style: italic; }
+a.digital_femsa-card-cvc-info { font-style: italic; }
 div.cvc-info:hover { cursor: default; }
 
-a.conekta-card-cvc-info div.cvc-info {
+a.digital_femsa-card-cvc-info div.cvc-info {
   background-color: #bde5f8;
   border: #00529b solid 1px;
   -moz-border-radius: 3px;
@@ -93,9 +93,9 @@ a.conekta-card-cvc-info div.cvc-info {
   width: 300px;
 }
 
-a.conekta-card-cvc-info:hover div.cvc-info { display: block; }
+a.digital_femsa-card-cvc-info:hover div.cvc-info { display: block; }
 
-#conekta-payment-form img.cc-icon {
+#digital_femsa-payment-form img.cc-icon {
   border: #ccc solid 1px;
   float: left;
   margin-right: 5px;
@@ -109,16 +109,16 @@ a.conekta-card-cvc-info:hover div.cvc-info { display: block; }
 img.disable { opacity: 0.3; }
 img.enable { opacity: 1; }
 
-#conekta-payment-form-cc .conekta-submit-button-cc { margin-left: 5px; }
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc { margin-left: 5px; }
 
-#conekta-payment-form-cc a {
+#digital_femsa-payment-form-cc a {
   display: inline;
   font-size: 11px;
   text-decoration: underline;
 }
 
-#conekta-payment-form .conekta-submit-button,
-#conekta-payment-form-cc .conekta-submit-button-cc {
+#digital_femsa-payment-form .digital_femsa-submit-button,
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc {
   position: relative;
   display: inline-block;
   padding: 5px 7px;
@@ -131,13 +131,13 @@ img.enable { opacity: 1; }
   cursor: pointer;
 }
 
-#conekta-payment-form .conekta-submit-button:hover,
-#conekta-payment-form-cc .conekta-submit-button-cc:hover {
+#digital_femsa-payment-form .digital_femsa-submit-button:hover,
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc:hover {
   text-decoration: none;
   background-position: left -50px;
 }
 
-div.conekta-payment-errors {
+div.digital_femsa-payment-errors {
   margin: 0 0 10px 0;
   padding: 10px;
   border: 1px solid #900;
@@ -146,30 +146,30 @@ div.conekta-payment-errors {
   display: none;
 }
 
-#conekta-translations,
-#conekta-ajax-loader { display: none; }
+#digital_femsa-translations,
+#digital_femsa-ajax-loader { display: none; }
 
-#conekta_save_token { vertical-align: top; }
+#digital_femsa_save_token { vertical-align: top; }
 
-#conekta-payment-form input,
-#conekta-payment-form select { margin-left: 0; }
+#digital_femsa-payment-form input,
+#digital_femsa-payment-form select { margin-left: 0; }
 
 p.payment_module,
 div.payment_module { margin-bottom: 10px; }
 
-.conekta-payment-form { display: none; }
-.conekta-payment-form.active { display: block; }
+.digital_femsa-payment-form { display: none; }
+.digital_femsa-payment-form.active { display: block; }
 
-p.conekta-payment-module.payment_module.cash-option a.conekta_title {
+p.digital_femsa-payment-module.payment_module.cash-option a.digital_femsa_title {
   background: url(../img/oxxo.png) 25px 38px no-repeat #fbfbfb;
 }
 
-div.conekta-payment-module.payment_module.active a, p.conekta-payment-module.payment_module.active a:after {
+div.digital_femsa-payment-module.payment_module.active a, p.digital_femsa-payment-module.payment_module.active a:after {
 content:"\f078";
 padding-right: 20px;
 }
 
-.conekta_delete_card {
+.digital_femsa_delete_card {
     float:right;
     cursor:pointer;
 }

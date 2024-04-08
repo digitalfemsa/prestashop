@@ -110,7 +110,7 @@ class Handler extends Exception
         }
     }
 
-    public function getConektaMessage()
+    public function getDigitalFemsaMessage()
     {
         return json_decode($this->errorStack);
     }

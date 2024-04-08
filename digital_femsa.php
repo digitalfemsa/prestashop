@@ -40,7 +40,6 @@ if (!defined('_PS_VERSION_')) {
 define('DIGITAL_FEMSA_METADATA_LIMIT', 12);
 
 /**
- * Conekta Class Doc Comment
  *
  * @category Class
  *
@@ -1289,7 +1288,7 @@ class DigitalFemsa extends PaymentModule
     }
 
     /**
-     * Create Webhook ok conekta
+     * Create Webhook
      *
      * @return bool
      */
@@ -1337,7 +1336,7 @@ class DigitalFemsa extends PaymentModule
             ]
         );
 
-        return $this->context->smarty->fetch('module:conekta/views/templates/front/payment_form.tpl');
+        return $this->context->smarty->fetch('module:digital_femsa/views/templates/front/payment_form.tpl');
     }
 
     /**

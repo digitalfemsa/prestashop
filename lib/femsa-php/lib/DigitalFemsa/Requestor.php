@@ -34,7 +34,7 @@ class Requestor
     /**
      * Function apiUrl
      *
-     * get Base path of conekta api i.e. https://api.conekta.com
+     * get Base path of digitalfemsa api i.e. https://api.digitalfemsa.io
      *
      * @param url (string) endpoint to concatenate
      *
@@ -76,7 +76,7 @@ class Requestor
           'bindings_version' => DigitalFemsa::VERSION,
           'lang' => 'php',
           'lang_version' => phpversion(),
-          'publisher' => 'conekta',
+          'publisher' => 'digital_femsa',
           'uname' => php_uname(),
         ];
 
@@ -162,7 +162,7 @@ class Requestor
         $jsonResponse = json_decode($response, true);
 
         if ($responseCode != 200) {
-            throw Handler::errorHandler($jsonResponse, $responseCode);
+            Handler::errorHandler($jsonResponse, $responseCode);
         }
 
         return $jsonResponse;

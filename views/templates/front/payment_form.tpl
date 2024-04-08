@@ -14,22 +14,22 @@
  * @see       https://digitalfemsa.io/
  *}
 {if isset($message)}
-  <div class="conekta-payment-errors" style="display:block;">{$message|escape:'htmlall':'UTF-8'}</div>
+  <div class="digital-femsa-payment-errors" style="display:block;">{$message|escape:'htmlall':'UTF-8'}</div>
 {/if}
 {if isset($smarty.get.message)}
-  <div class="conekta-payment-errors" style="display:block;">{$smarty.get.message|escape:'htmlall':'UTF-8'}</div>
+  <div class="digital-femsa-payment-errors" style="display:block;">{$smarty.get.message|escape:'htmlall':'UTF-8'}</div>
 {/if}
 
-<form action="{$action|escape:'htmlall':'UTF-8'}" id="conekta-payment-form" method="post">
+<form action="{$action|escape:'htmlall':'UTF-8'}" id="digital-femsa-payment-form" method="post">
 
-  {if isset($smarty.get.conekta_error)}
-    <div class="conekta-payment-errors">
-      {l s='There was a problem processing your credit card, please double check your data and try again.' mod='conekta'}
+  {if isset($smarty.get.digital_femsa_error)}
+    <div class="digital-femsa-payment-errors">
+      {l s='There was a problem processing your credit card, please double check your data and try again.' mod='digital_femsa'}
     </div>
   {/if}
   {if !isset($message)}
-      <div id="conektaIframeContainer" style="height:800px; width: 100%;"></div>
-      <button style="display:none" id="conekta-payment-resume" type="submit" class="btn btn-primary">resumen</button>
+      <div id="digitalFemsaIframeContainer" style="height:800px; width: 100%;"></div>
+      <button style="display:none" id="digital-femsa-payment-resume" type="submit" class="btn btn-primary">resumen</button>
   {/if}
 
 </form>

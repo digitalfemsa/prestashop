@@ -14,8 +14,8 @@
  * @see       https://digitalfemsa.io/
  *}
 {if isset($cash)}
-<p> {l s='Informacion para realizar el pago:' mod='conekta'} <p>
-                <br><br><b>{l s='Monto:' mod='conekta'}</b> $ {$digital_femsa_order.amount|escape:'htmlall':'UTF-8' }
+<p> {l s='Informacion para realizar el pago:' mod='digital_femsa'} <p>
+                <br><br><b>{l s='Monto:' mod='digital_femsa'}</b> $ {$digital_femsa_order.amount|escape:'htmlall':'UTF-8' }
                 {$digital_femsa_order.currency|escape:'htmlall':'UTF-8' }
                 <br><b><p>OXXO cobrará una comisión adicional al momento de realizar el pago</p>
                 <br><h1>Referencia: {$digital_femsa_order.barcode|escape:'htmlall':'UTF-8'}</h1>
@@ -26,6 +26,6 @@
                 <br><p>4.- Realiza el pago correspondiente con dinero en efectivo </p>
                 <br><p>5.- Al confirmar tu pago, el cajero te entregará un comprobante impreso. En él podrás verificar que se haya realizado correctamente. Conserva este comprobante de pago </p>
                 <br /><br /><span>
-<div class="conf confirmation">{l s='Por favor de imprimir la ficha de pago y realizar el pago en el OXXO más cercano.' mod='conekta'}</div>
+<div class="conf confirmation">{l s='Por favor de imprimir la ficha de pago y realizar el pago en el OXXO más cercano.' mod='digital_femsa'}</div>
 {/if}
 
