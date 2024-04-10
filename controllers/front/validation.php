@@ -44,7 +44,7 @@ class DigitalFemsaValidationModuleFrontController extends ModuleFrontController
         $digitalFemsa = new DigitalFemsa();
 
         foreach (Module::getPaymentModules() as $module) {
-            if ($module['name'] == 'digital_femsa') {
+            if ($module['name'] == 'digitalfemsa') {
                 $authorized = true;
 
                 break;
@@ -85,7 +85,7 @@ class DigitalFemsaValidationModuleFrontController extends ModuleFrontController
 
             $digitalFemsa->processPayment($order);
 
-            $this->setTemplate('module:digital_femsa/views/templates/front/payment_return.tpl');
+            $this->setTemplate('module:digitalfemsa/views/templates/front/payment_return.tpl');
         }
     }
 }

@@ -48,7 +48,7 @@ class DigitalFemsaObject extends ArrayObject
     {
         foreach ($values as $object => $val) {
             if (is_array($val)) {
-                $val = Util::convertToFemsaDigitalObject($val);
+                $val = Util::convertToDigitalFemsaObject($val);
             }
 
             if (strpos(get_class($this), 'DigitalFemsaObject') !== false) {

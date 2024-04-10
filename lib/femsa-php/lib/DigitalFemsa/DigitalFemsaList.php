@@ -34,7 +34,7 @@ class DigitalFemsaList extends DigitalFemsaObject
 
     public function addElement($element)
     {
-        $element = Util::convertToFemsaDigitalObject($element);
+        $element = Util::convertToDigitalFemsaObject($element);
         $this[$this->total] = $element;
         $this->_values[$this->total] = $element;
         $this->total = $this->total + 1;

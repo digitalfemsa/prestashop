@@ -18,7 +18,7 @@ Installation
   Clone the module using 
 
 ```
-git clone --recursive https://github.com/digitalfemsa/prestashop ./digital_femsa
+git clone --recursive https://github.com/digitalfemsa/prestashop ./digitalfemsa
 ```
 
 There is no custom installation for this plugin, just the default:

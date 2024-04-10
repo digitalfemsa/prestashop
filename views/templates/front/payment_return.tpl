@@ -17,13 +17,13 @@
 
 {block name="content"}
   <section>
-    <p>{l s='You have successfully submitted your payment form.' mod='digital_femsa'}</p>
-    <p>{l s='Here are the params:' mod='digital_femsa'}</p>
+    <p>{l s='You have successfully submitted your payment form.' mod='digitalfemsa'}</p>
+    <p>{l s='Here are the params:' mod='digitalfemsa'}</p>
     <ul>
       {foreach from=$params key=name item=value}
         <li>{$name|escape:'htmlall':'UTF-8'}: {$value|escape:'htmlall':'UTF-8'}</li>
       {/foreach}
     </ul>
-    <p>{l s='Now, you just need to proceed the payment and do what you need to do.' mod='digital_femsa'}</p>
+    <p>{l s='Now, you just need to proceed the payment and do what you need to do.' mod='digitalfemsa'}</p>
   </section>
 {/block}

@@ -81,7 +81,7 @@ $(document).ready (function($) {
 		}
 	})
 
-	var paymentOption = document.querySelectorAll('input[data-module-name="digital_femsa"]')[0];
+	var paymentOption = document.querySelectorAll('input[data-module-name="digitalfemsa"]')[0];
 
 	$("input[name=payment-option]").click(function () {
 		if (paymentOption.checked) {

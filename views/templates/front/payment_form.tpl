@@ -24,7 +24,7 @@
 
   {if isset($smarty.get.digital_femsa_error)}
     <div class="digital-femsa-payment-errors">
-      {l s='There was a problem processing your credit card, please double check your data and try again.' mod='digital_femsa'}
+      {l s='There was a problem processing your credit card, please double check your data and try again.' mod='digitalfemsa'}
     </div>
   {/if}
   {if !isset($message)}

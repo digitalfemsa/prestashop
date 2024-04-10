@@ -41,7 +41,7 @@ abstract class Util
     'order' => '\DigitalFemsa\Order',
     ];
 
-    public static function convertToFemsaDigitalObject($resp)
+    public static function convertToDigitalFemsaObject($resp)
     {
         $types = self::$types;
 

@@ -86,7 +86,7 @@ class DigitalFemsaNotificationModuleFrontController extends ModuleFrontControlle
         $order = new Order($orderID);
         $orderFields = $order->getFields();
         $currencyPayment = Currency::getPaymentCurrencies(
-            Module::getModuleIdByName('digital_femsa'),
+            Module::getModuleIdByName('digitalfemsa'),
             $orderFields['id_shop']
         );
         $totalOrderAmount = $order->getOrdersTotalPaid();

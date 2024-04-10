@@ -161,15 +161,15 @@ class DigitalFemsa extends PaymentModule
      */
     public function __construct()
     {
-        $this->name = 'digital_femsa';
+        $this->name = 'digitalfemsa';
         $this->tab = 'payments_gateways';
         $this->version = '1.0.0';
         $this->ps_versions_compliancy = [
             'min' => '1.7',
             'max' => _PS_VERSION_,
         ];
-        $this->author = 'FemsaDigital';
-        $this->displayName = $this->l('Oxxopay');
+        $this->author = 'DigitalFemsa';
+        $this->displayName = $this->l('DigitalFemsa');
         $this->description = $this->l('Accept cash payments');
         $this->controllers = ['validation', 'notification'];
         $this->is_eu_compatible = 1;
@@ -418,7 +418,7 @@ class DigitalFemsa extends PaymentModule
         $state->name = $names;
         $state->color = '#4169E1';
         $state->send_email = true;
-        $state->module_name = 'digital_femsa';
+        $state->module_name = 'digitalfemsa';
         $templ = [];
 
         foreach ($languages as $lang) {
@@ -926,7 +926,7 @@ class DigitalFemsa extends PaymentModule
 
             if ($setting === 'DIGITAL_FEMSA_WEBHOOK') {
                 $settingValue = !empty($settingValue) ? $settingValue : Context::getContext()->link->getModuleLink(
-                    'digital_femsa',
+                    'digitalfemsa',
                     'notification',
                     ['ajax' => true]
                 );
@@ -1336,7 +1336,7 @@ class DigitalFemsa extends PaymentModule
             ]
         );
 
-        return $this->context->smarty->fetch('module:digital_femsa/views/templates/front/payment_form.tpl');
+        return $this->context->smarty->fetch('module:digitalfemsa/views/templates/front/payment_form.tpl');
     }
 
     /**
