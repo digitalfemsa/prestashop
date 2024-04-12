@@ -22,11 +22,6 @@
 
 <form action="{$action|escape:'htmlall':'UTF-8'}" id="digital-femsa-payment-form" method="post">
 
-  {if isset($smarty.get.digital_femsa_error)}
-    <div class="digital-femsa-payment-errors">
-      {l s='There was a problem processing your credit card, please double check your data and try again.' mod='digitalfemsa'}
-    </div>
-  {/if}
   {if !isset($message)}
       <div id="digitalFemsaIframeContainer" style="height:800px; width: 100%;"></div>
       <button style="display:none" id="digital-femsa-payment-resume" type="submit" class="btn btn-primary">resumen</button>

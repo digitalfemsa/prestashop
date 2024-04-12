@@ -996,7 +996,7 @@ class DigitalFemsa extends PaymentModule
                         'type' => 'text',
                         'label' => $this->trans('Webhook', [], 'Modules.DigitalFemsa.Admin'),
                         'desc' => $this->trans(
-                            'https://{domain}/es/module/oxxopay/notification?ajax=true',
+                            'https://{domain}/es/module/digitalfemsa/notification?ajax=true',
                             [],
                             'Modules.DigitalFemsa.Admin'
                         ),

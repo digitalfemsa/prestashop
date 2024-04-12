@@ -41,7 +41,7 @@ var digitalFemsaErrorResponseHandler = function(token) {
 
 $(document).ready (function($) {
 	window.DigitalFemsaCheckoutComponents.Integration ({
-		targetIFrame: "#digitalFemsaIframeContainer", 
+		targetIFrame: "#digitalFemsaIframeContainer",
 		checkoutRequestId: digital_femsa_checkout_id,
 		publicKey: digital_femsa_public_key,
 		options: {
