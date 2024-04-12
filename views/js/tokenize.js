@@ -39,9 +39,8 @@ var digitalFemsaErrorResponseHandler = function(token) {
 	}
 };
 
-
 $(document).ready (function($) {
-	window.CheckoutComponents.Integration ({
+	window.DigitalFemsaCheckoutComponents.Integration ({
 		targetIFrame: "#digitalFemsaIframeContainer", 
 		checkoutRequestId: digital_femsa_checkout_id,
 		publicKey: digital_femsa_public_key,
