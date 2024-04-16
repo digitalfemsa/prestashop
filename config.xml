@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-    <name>OxxoPay</name>
-    <displayName><![CDATA[OxxoPay]]></displayName>
+    <name>digitalfemsa</name>
+    <displayName><![CDATA[DigitalFemsa]]></displayName>
     <version><![CDATA[1.0.0]]></version>
     <description><![CDATA[Accept cash payments]]></description>
-    <author><![CDATA[FemsaDigital]]></author>
+    <author><![CDATA[DigitalFemsa]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
     <is_configurable>1</is_configurable>
     <need_instance>1</need_instance>

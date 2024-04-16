@@ -1,24 +1,24 @@
 <?php
 /**
  * NOTICE OF LICENSE
- * Title   : Conekta Card Payment Gateway for Prestashop
- * Author  : Conekta.io
- * URL     : https://www.conekta.io/es/docs/plugins/prestashop.
+ * Title   : DigitalFemsa Cash Payment Gateway for Prestashop
+ * Author  : DigitalFemsa.io
+ * URL     : https://www.digitalfemsa.io/es/docs/plugins/prestashop.
  * PHP Version 7.0.0
- * Conekta File Doc Comment
+ * DigitalFemsa File Doc Comment
  *
- * @author    Conekta <support@conekta.io>
- * @copyright 2012-2023 Conekta
+ * @author    DigitalFemsa <support@digitalfemsa.io>
+ * @copyright 2024 DigitalFemsa
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @category  Conekta
+ * @category  DigitalFemsa
  *
  * @version   GIT: @2.3.7@
  *
- * @see       https://conekta.com/
+ * @see       https://digitalfemsa.io/
  */
 require_once dirname(__FILE__) . '/../../model/DigitalFemsaDatabase.php';
-class ConektaNotificationModuleFrontController extends ModuleFrontController
+class DigitalFemsaNotificationModuleFrontController extends ModuleFrontController
 {
     public const ORDER_CANCELED = 6;
 
@@ -63,9 +63,9 @@ class ConektaNotificationModuleFrontController extends ModuleFrontController
 
                     break;
                 case self::events[5]:
-                    $conektaOrder = $data->data->object;
-                    $orderID = $this->getOrderID( $conektaOrder);
-                    $this->orderPendingPayment($orderID, $conektaOrder);
+                    $digitalFemsaOrder = $data->data->object;
+                    $orderID = $this->getOrderID( $digitalFemsaOrder);
+                    $this->orderPendingPayment($orderID, $digitalFemsaOrder);
 
                     break;
             }
@@ -73,27 +73,27 @@ class ConektaNotificationModuleFrontController extends ModuleFrontController
     }
 
     /**
-     * @param $conektaOrder
+     * @param $digitalFemsaOrder
      *
      * @return void
      *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
-    private function orderPaid($conektaOrder)
+    private function orderPaid($digitalFemsaOrder)
     {
-        $orderID = $this->getOrderID($conektaOrder);
+        $orderID = $this->getOrderID($digitalFemsaOrder);
         $order = new Order($orderID);
         $orderFields = $order->getFields();
         $currencyPayment = Currency::getPaymentCurrencies(
-            Module::getModuleIdByName('conekta'),
+            Module::getModuleIdByName('digitalfemsa'),
             $orderFields['id_shop']
         );
         $totalOrderAmount = $order->getOrdersTotalPaid();
         $strTotalOrderAmount = (string) $totalOrderAmount * 100;
 
-        if ($currencyPayment[0]['iso_code'] === $conektaOrder->currency) {
-            if ($strTotalOrderAmount == $conektaOrder->amount) {
+        if ($currencyPayment[0]['iso_code'] === $digitalFemsaOrder->currency) {
+            if ($strTotalOrderAmount == $digitalFemsaOrder->amount) {
                 $orderHistory = new OrderHistory();
                 $orderHistory->id_order = (int) $order->id;
                 $orderHistory->changeIdOrderState(
@@ -103,13 +103,13 @@ class ConektaNotificationModuleFrontController extends ModuleFrontController
                 $orderHistory->addWithEmail();
                 $addIdTransaction = '';
 
-                if (isset($conektaOrder->checkout->plan_id)) {
-                    $addIdTransaction = ', id_transaction = ' . json_encode($conektaOrder->charges->data[0]->id);
+                if (isset($digitalFemsaOrder->checkout->plan_id)) {
+                    $addIdTransaction = ', id_transaction = ' . json_encode($digitalFemsaOrder->charges->data[0]->id);
                 }
 
                 Db::getInstance()->Execute(
                     'UPDATE ' . _DB_PREFIX_
-                    . 'conekta_transaction SET status = "paid"' . $addIdTransaction . ' WHERE id_order = '
+                    . 'digital_femsa_transaction SET status = "paid"' . $addIdTransaction . ' WHERE id_order = '
                     . pSQL($orderID)
                 );
             }
@@ -162,28 +162,28 @@ class ConektaNotificationModuleFrontController extends ModuleFrontController
     }
 
     /**
-     * @param $conektaPlan
+     * @param $digitalFemsaPlan
      *
      * @return void
      */
-    private function planDeleted($conektaPlan)
+    private function planDeleted($digitalFemsaPlan)
     {
-        $result = DigitalFemsaDatabase::getProductIdProductData($conektaPlan->id);
+        $result = DigitalFemsaDatabase::getProductIdProductData($digitalFemsaPlan->id);
 
         foreach ($result as $product) {
-            DigitalFemsaDatabase::updateConektaProductData($product['id_product'], 'is_subscription', 'false');
-            DigitalFemsaDatabase::updateConektaProductData($product['id_product'], 'subscription_plan', '');
+            DigitalFemsaDatabase::updateDigitalFemsaProductData($product['id_product'], 'is_subscription', 'false');
+            DigitalFemsaDatabase::updateDigitalFemsaProductData($product['id_product'], 'subscription_plan', '');
         }
     }
 
     /**
-     * @param $conektaOrder
+     * @param $digitalFemsaOrder
      *
      * @return mixed
      */
-    private function getOrderID($conektaOrder)
+    private function getOrderID($digitalFemsaOrder)
     {
-        $referenceID = (string) $conektaOrder->metadata->reference_id;
+        $referenceID = (string) $digitalFemsaOrder->metadata->reference_id;
         $result = DigitalFemsaDatabase::getOrderByReferenceId($referenceID);
 
         return $result['id_order'];
@@ -212,9 +212,9 @@ class ConektaNotificationModuleFrontController extends ModuleFrontController
      */
     private function authenticateEvent($body, $digest)
     {
-        $privateKeyString = Configuration::get('FEMSA_DIGITAL_MODE') ?
-            Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_LIVE') :
-            Configuration::get('FEMSA_DIGITAL_PRIVATE_KEY_TEST');
+        $privateKeyString = Configuration::get('DIGITAL_FEMSA_MODE') ?
+            Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_LIVE') :
+            Configuration::get('DIGITAL_FEMSA_PRIVATE_KEY_TEST');
 
         if (!empty($privateKeyString) && !empty($body)) {
             if (!empty($digest)) {

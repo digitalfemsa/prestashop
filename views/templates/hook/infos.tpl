@@ -1,26 +1,26 @@
 {**
  * NOTICE OF LICENSE
- * Title   : Conekta Card Payment Gateway for Prestashop
- * Author  : Conekta.io
- * URL     : https://www.conekta.io/es/docs/plugins/prestashop.
+ * Title   : DigitalFemsa Cash Payment Gateway for Prestashop
+ * Author  : DigitalFemsa.io
+ * URL     : https://www.digitalfemsa.io/es/docs/plugins/prestashop.
  * PHP Version 7.0.0
- * Conekta File Doc Comment
+ * DigitalFemsa File Doc Comment
  *
- * @author    Conekta <support@conekta.io>
- * @copyright 2012-2023 Conekta
+ * @author    DigitalFemsa <support@digitalfemsa.io>
+ * @copyright 2024 DigitalFemsa
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * @category  Conekta
+ * @category  DigitalFemsa
  * @version   GIT: @2.3.7@
- * @see       https://conekta.com/
+ * @see       https://digitalfemsa.io/
  *}
 <div class="alert alert-info">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<img src="../modules/oxxopay/logo.png" style="float:left; margin-right:15px;" width="60" height="60">
-	<p><strong>{l s='This module allows you to accept payments by check.' d='Modules.Checkpayment.Admin' mod='conekta'}</strong></p>
-	<p>{l s='If the client chooses this payment method, the order status will change to Waiting for payment.'  d='Modules.Checkpayment.Admin' mod='conekta'}</p>
-	<p>{l s='You will need to manually confirm the order as soon as you receive a check.'  d='Modules.Checkpayment.Admin' mod='conekta'}</p>
+	<img src="../modules/digitalfemsa/logo.png" style="float:left; margin-right:15px;" width="60" height="60">
+	<p><strong>{l s='This module allows you to accept payments by check.' d='Modules.Checkpayment.Admin' mod='digitalfemsa'}</strong></p>
+	<p>{l s='If the client chooses this payment method, the order status will change to Waiting for payment.'  d='Modules.Checkpayment.Admin' mod='digitalfemsa'}</p>
+	<p>{l s='You will need to manually confirm the order as soon as you receive a check.'  d='Modules.Checkpayment.Admin' mod='digitalfemsa'}</p>
 </div>
 {if !empty($error_webhook_message)}
 	<div class="alert alert-warning">

@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Conekta\\Payments\\' => array($baseDir . '/src'),
+    'DigitalFemsa\\Payments\\' => array($baseDir . '/src'),
 );

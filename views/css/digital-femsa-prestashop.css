@@ -1,0 +1,227 @@
+div.payment_module {
+  padding-bottom: 20px;
+  text-transform: none;
+}
+
+.digital_femsa_title img {
+  float: none;
+  margin-right: 8px;
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
+p.payment_module a,
+div.payment_module a {
+  display: block;
+  border: 1px solid #d6d4d4;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  font-size: 17px;
+  line-height: 23px;
+  color: #333;
+  font-weight: bold;
+  padding: 33px 40px 34px 99px;
+  letter-spacing: -1px;
+  position: relative;
+  background: 15px 15px no-repeat #fbfbfb;
+  cursor: pointer;
+}
+
+div.payment_module a,
+p.payment_module a::after {
+  display: block;
+  content: "\f054";
+  position: absolute;
+  right: 15px;
+  margin-top: -11px;
+  top: 50%;
+  font-size: 25px;
+  height: 22px;
+  width: 14px;
+  color: #777;
+}
+
+div.digital_femsa-payment-module.payment_module.active a,
+p.digital_femsa-payment-module.payment_module.active a::after {
+  content: "\f078";
+  padding-right: 20px;
+}
+
+#digital_femsa-payment-form label {
+  display: inline-block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+#digital_femsa-payment-form label.lowercase { text-transform: none; }
+
+#digital_femsa-payment-form input[type="text"],
+#digital_femsa-payment-form select {
+  border: #ccc solid 1px;
+  margin-bottom: 15px;
+  padding: 3px;
+}
+
+#digital_femsa-payment-form input[type="checkbox"] { margin-bottom: 15px; }
+#digital_femsa-payment-form input.digital_femsa-card-number { width: 210px; }
+
+#digital_femsa-payment-form a {
+  display: inline;
+  position: relative;
+  border: none;
+  padding: 0;
+}
+
+a.digital_femsa-card-cvc-info { font-style: italic; }
+div.cvc-info:hover { cursor: default; }
+
+a.digital_femsa-card-cvc-info div.cvc-info {
+  background-color: #bde5f8;
+  border: #00529b solid 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #00529b;
+  display: none;
+  font-style: normal;
+  padding: 8px;
+  position: absolute;
+  right: -320px;
+  top: -10px;
+  text-decoration: none;
+  width: 300px;
+}
+
+a.digital_femsa-card-cvc-info:hover div.cvc-info { display: block; }
+
+#digital_femsa-payment-form img.cc-icon {
+  border: #ccc solid 1px;
+  float: left;
+  margin-right: 5px;
+}
+
+.block-left {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+img.disable { opacity: 0.3; }
+img.enable { opacity: 1; }
+
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc { margin-left: 5px; }
+
+#digital_femsa-payment-form-cc a {
+  display: inline;
+  font-size: 11px;
+  text-decoration: underline;
+}
+
+#digital_femsa-payment-form .digital_femsa-submit-button,
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc {
+  position: relative;
+  display: inline-block;
+  padding: 5px 7px;
+  border: 1px solid #c90;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
+
+#digital_femsa-payment-form .digital_femsa-submit-button:hover,
+#digital_femsa-payment-form-cc .digital_femsa-submit-button-cc:hover {
+  text-decoration: none;
+  background-position: left -50px;
+}
+
+div.digital_femsa-payment-errors {
+  margin: 0 0 10px 0;
+  padding: 10px;
+  border: 1px solid #900;
+  font-size: 13px;
+  background: #fcc;
+  display: none;
+}
+
+#digital_femsa-translations,
+#digital_femsa-ajax-loader { display: none; }
+
+#digital_femsa_save_token { vertical-align: top; }
+
+#digital_femsa-payment-form input,
+#digital_femsa-payment-form select { margin-left: 0; }
+
+p.payment_module,
+div.payment_module { margin-bottom: 10px; }
+
+.digital_femsa-payment-form { display: none; }
+.digital_femsa-payment-form.active { display: block; }
+
+p.digital_femsa-payment-module.payment_module.cash-option a.digital_femsa_title {
+  background: url(../img/oxxo.png) 25px 38px no-repeat #fbfbfb;
+}
+
+div.digital_femsa-payment-module.payment_module.active a, p.digital_femsa-payment-module.payment_module.active a:after {
+content:"\f078";
+padding-right: 20px;
+}
+
+.digital_femsa_delete_card {
+    float:right;
+    cursor:pointer;
+}
+.info_card {
+    border-bottom: 0.15rem dotted #dedfdf;
+    padding:1rem;
+}
+.customer-payment-sources {
+	border-top: 0.2rem solid #dedfdf;
+    border-bottom: 0.2rem solid #dedfdf;
+
+    margin: 2rem 0;
+}
+#new_payment_card {
+    background-color:transparent;
+    color:#cd2653;
+    font-size: 1rem;
+    width:100%; 
+    cursor:pointer;
+    text-decoration:none;
+}
+@media (max-width:615px){
+    #new_payment_card {
+        font-size: 1.3rem;
+    }
+}
+#new_payment_card:hover {
+	text-decoration:underline;
+	color:#cd2653;
+}
+.content_new_card{
+	text-align: center;
+	margin-bottom: 1rem;
+}
+.card_details {
+	display: flex;
+	margin-top: 0.8rem;
+}
+#ckpg_checkout_delete_loader-gif{
+    float:right;
+    display: none;
+}
+.radio_payment_source{
+	float:left;
+	margin-right: 0.4rem;
+}
+.source_card {
+    box-shadow: 1px 1px 15px 0px grey;
+    height: 70px;
+    margin-bottom: 10px;
+    padding: 0.5rem;
+    border-radius: 7px 7px 7px 7px;
+    position: relative;
+    opacity: 1
+}

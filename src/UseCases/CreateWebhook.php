@@ -1,56 +1,56 @@
 <?php
 /**
  * NOTICE OF LICENSE
- * Title   : Conekta Card Payment Gateway for Prestashop
- * Author  : Conekta.io
- * URL     : https://www.conekta.io/es/docs/plugins/prestashop.
+ * Title   : DigitalFemsa Cash Payment Gateway for Prestashop
+ * Author  : DigitalFemsa.io
+ * URL     : https://www.digitalfemsa.io/es/docs/plugins/prestashop.
  * PHP Version 7.0.0
- * Conekta File Doc Comment
+ * DigitalFemsa File Doc Comment
  *
- * @author    Conekta <support@conekta.io>
- * @copyright 2012-2023 Conekta
+ * @author    DigitalFemsa <support@digitalfemsa.io>
+ * @copyright 2024 DigitalFemsa
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
- * @category  Conekta
+ * @category  DigitalFemsa
  *
  * @version   GIT: @2.3.7@
  *
- * @see       https://conekta.com/
+ * @see       https://digitalfemsa.io/
  */
 
 namespace DigitalFemsa\Payments\UseCases;
 
-require_once __DIR__ . '/../../lib/conekta-php/lib/Conekta.php';
+require_once __DIR__ . '/../../lib/femsa-php/lib/DigitalFemsa.php';
 
-use DigitalFemsa\Conekta;
+use DigitalFemsa\DigitalFemsa;
 use DigitalFemsa\Webhook;
 use Configuration;
 use Tools;
 
 class CreateWebhook
 {
-    public const webhookSetting = 'FEMSA_DIGITAL_WEBHOOK';
+    public const webhookSetting = 'DIGITAL_FEMSA_WEBHOOK';
 
-    public const webhookFailedUrlSetting = 'FEMSA_DIGITAL_WEBHOOK_FAILED_URL';
+    public const webhookFailedUrlSetting = 'DIGITAL_FEMSA_WEBHOOK_FAILED_URL';
 
-    public const webhookErrorSetting = 'FEMSA_DIGITAL_WEBHOOK_ERROR_MESSAGE';
+    public const webhookErrorSetting = 'DIGITAL_FEMSA_WEBHOOK_ERROR_MESSAGE';
 
-    public const webhookAttemptsSetting = 'FEMSA_DIGITAL_WEBHOOK_FAILED_ATTEMPTS';
+    public const webhookAttemptsSetting = 'DIGITAL_FEMSA_WEBHOOK_FAILED_ATTEMPTS';
 
     public const MaxFailedAttempts = 5;
 
     public function __invoke(
-        bool $conektaMode,
+        bool $digitalFemsaMode,
         string $privateKey,
         string $isoCode,
         string $pluginVersion,
         string $oldWebhook
     ): bool {
-        Conekta::setApiKey($privateKey);
-        Conekta::setPlugin('Prestashop');
-        Conekta::setApiVersion('2.0.0');
-        Conekta::setPluginVersion($pluginVersion);
-        Conekta::setLocale($isoCode);
+        DigitalFemsa::setApiKey($privateKey);
+        DigitalFemsa::setPlugin('Prestashop');
+        DigitalFemsa::setApiVersion('2.0.0');
+        DigitalFemsa::setPluginVersion($pluginVersion);
+        DigitalFemsa::setLocale($isoCode);
 
         $events = ['events' => ['order.paid', 'order.expired']];
 
@@ -83,7 +83,7 @@ class CreateWebhook
                 });
 
                 if (count($isWebhooksRegistered) <= 0) {
-                    $mode = $conektaMode ? ['production_enabled' => 1] : ['development_enabled' => 1];
+                    $mode = $digitalFemsaMode ? ['production_enabled' => 1] : ['development_enabled' => 1];
                     Webhook::create(array_merge(['url' => $newWebhook], $mode, $events));
 
                     Configuration::updateValue(self::webhookSetting, $newWebhook);

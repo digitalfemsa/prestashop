@@ -1,12 +1,12 @@
 {
-  "name": "conekta/conekta-prestashop",
-  "description": "Conekta payments PrestaShop",
-  "homepage": "https://github.com/conekta/conekta_prestashop",
+  "name": "digitalfemsa/prestashop",
+  "description": "DigitalFemsa payments PrestaShop",
+  "homepage": "https://github.com/digitalfemsa/prestashop",
   "license": "AFL - Academic Free License (AFL 3.0)",
   "authors": [
     {
-      "name": "OxxoPay",
-      "email": "contact@prestashop.com"
+      "name": "DigitalFemsa",
+      "email": "contact@digitalfemsa.io"
     }
   ],
   "require": {

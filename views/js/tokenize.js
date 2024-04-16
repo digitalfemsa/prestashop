@@ -1,5 +1,5 @@
 /**
-* 2012-2022 Conekta
+* 2024 DigitalFemsa
 *
 * NOTICE OF LICENSE
 *
@@ -17,34 +17,33 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author Conekta <support@conekta.io>
-*  @copyright  2012-2023 Conekta
+*  @author DigitalFemsa <support@digitalfemsa.io>
+*  @copyright  2024 DigitalFemsa
 *  @version  v2.0.0
 *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
 
-var conektaSuccessResponseHandler = function(response) {
+var digitalFemsaSuccessResponseHandler = function(response) {
 	console.log(response);
-	var $form = $('#conekta-payment-form');
-	$form.append($('<input type="hidden" name="conektaToken" id="conektaToken" />').val(response.id));
+	var $form = $('#digital-femsa-payment-form');
+	$form.append($('<input type="hidden" name="digitalFemsaToken" id="digitalFemsaToken" />').val(response.id));
 };
  
-var conektaErrorResponseHandler = function(token) {
-	if ($('.conekta-payment-errors').length) {
-		$('.conekta-payment-errors').fadeIn(1000);
+var digitalFemsaErrorResponseHandler = function(token) {
+	if ($('.digital-femsa-payment-errors').length) {
+		$('.digital-femsa-payment-errors').fadeIn(1000);
 	} else {
-		$('#conekta-payment-form').prepend('<div class="conekta-payment-errors">' + token +'</div>');
-		$('.conekta-payment-errors').fadeIn(1000);
+		$('#digital-femsa-payment-form').prepend('<div class="digital-femsa-payment-errors">' + token +'</div>');
+		$('.digital-femsa-payment-errors').fadeIn(1000);
 	}
 };
 
-
 $(document).ready (function($) {
-	window.ConektaCheckoutComponents.Integration ({
-		targetIFrame: "#conektaIframeContainer", 
-		checkoutRequestId: conekta_checkout_id,
-		publicKey: conekta_public_key,
+	window.DigitalFemsaCheckoutComponents.Integration ({
+		targetIFrame: "#digitalFemsaIframeContainer",
+		checkoutRequestId: digital_femsa_checkout_id,
+		publicKey: digital_femsa_public_key,
 		options: {
 			theme: 'default',
 			styles: {
@@ -55,17 +54,17 @@ $(document).ready (function($) {
 		},
 		onCreateTokenSucceeded: function (token) {
 			console.log("Token creado ");
-			document.getElementById('conektaIframeContainer').remove();
-			conektaSuccessResponseHandler(token);
+			document.getElementById('digitalFemsaIframeContainer').remove();
+			digitalFemsaSuccessResponseHandler(token);
 		},
 		onCreateTokenError: function (error) {
 			console.log(error);
-			conektaErrorResponseHandler(error);
+			digitalFemsaErrorResponseHandler(error);
 		},
 		onFinalizePayment: function(event) {
-			var $form = $('#conekta-payment-form');
-			$form.append($('<input type="hidden" name="conektaOrdenID" id="conektaOrdenID" />').val(conekta_order_id));
-			$form.append($('<input type="hidden" name="conektAmount" id="conektAmount" />').val(conekta_amount));
+			var $form = $('#digital-femsa-payment-form');
+			$form.append($('<input type="hidden" name="digital_femsa_orden_id" id="digital_femsa_orden_id" />').val(digital_femsa_order_id));
+			$form.append($('<input type="hidden" name="digital_femsa_mount" id="digital_femsa_mount" />').val(digital_femsa_amount));
 			$form.append($('<input type="hidden" name="chargeId" id="chargeId" />').val(event.charge.id));
 			$form.append($('<input type="hidden" name="charge_currency" id="charge_currency" />').val(event.charge.currency));
 			$form.append($('<input type="hidden" name="charge_status" id="charge_status" />').val(event.charge.status));
@@ -81,7 +80,7 @@ $(document).ready (function($) {
 		}
 	})
 
-	var paymentOption = document.querySelectorAll('input[data-module-name="conekta"]')[0];
+	var paymentOption = document.querySelectorAll('input[data-module-name="digitalfemsa"]')[0];
 
 	$("input[name=payment-option]").click(function () {
 		if (paymentOption.checked) {
