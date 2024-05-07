@@ -17,7 +17,7 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author DigitalFemsa <support@digitalfemsa.io>
+*  @author DigitalFemsa <monitoreo.b2b@digitalfemsa.com>
 *  @copyright  2024 DigitalFemsa
 *  @version  v2.0.0
 *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
