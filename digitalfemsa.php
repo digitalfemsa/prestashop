@@ -169,7 +169,7 @@ class DigitalFemsa extends PaymentModule
             'max' => _PS_VERSION_,
         ];
         $this->author = 'DigitalFemsa';
-        $this->displayName = $this->l('DigitalFemsa');
+        $this->displayName = $this->l('Spin');
         $this->description = $this->l('Accept cash payments');
         $this->controllers = ['validation', 'notification'];
         $this->is_eu_compatible = 1;
