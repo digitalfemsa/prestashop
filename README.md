@@ -1,4 +1,4 @@
-Prestashop [1.7.8.x] Plugin v2.3.7
+Prestashop [1.7.8.x] Plugin v1.0.0
 =======================
 This plugin is an official and stable version of the DigitalFemsa Prestashop extension. It bundles functionality to process OXXO payments securely as well as send email notifications to your customers when they complete a successful purchase.
 
