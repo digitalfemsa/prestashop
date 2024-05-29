@@ -834,7 +834,7 @@ class DigitalFemsa extends PaymentModule
     {
         $embeddedOption = new PaymentOption();
         $embeddedOption->setModuleName($this->name)->setCallToActionText(
-            $this->l('Pago por medio de DigitalFemsa ')
+            $this->l('Pago por medio de Spin')
         )->setAction($this->context->link->getModuleLink($this->name, 'validation', [], true))->setForm(
             $this->generateCardPaymentForm()
         )->setLogo(Media::getMediaPath(_PS_MODULE_DIR_ . $this->name . '/views/img/cards2.png'));
