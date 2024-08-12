@@ -1,0 +1,273 @@
+/* .digital_femsa-module-wrapper,
+.bootstrap:parent,
+.nobootstrap:parent {
+  min-width: 930px;
+} */
+
+.digital_femsa-module-wrapper {
+  clear: both;
+  margin: 0 auto;
+  min-width: 930px;
+  overflow: hidden;
+}
+
+.digital_femsa-module-header {
+  clear: both;
+  margin-bottom: 40px;
+  padding-top: 15px;
+  overflow: hidden;
+}
+
+.digital_femsa-module-header img.digital_femsa-logo {
+  float: left;
+  margin: 0 70px 0 0;
+}
+
+.digital_femsa-module-header span.digital_femsa-module-intro {
+  border-left: #c3d9ef solid 1px;
+  color: #008cdd;
+  display: block;
+  float: left;
+  font-size: 18px;
+  height: 61px;
+  line-height: 24px;
+  margin: 0 35px 0 0;
+  padding: 11px 0 0 20px;
+  width: 310px;
+}
+
+.digital_femsa-module-header a.digital_femsa-module-create-btn {
+  background: url(img/bg_btn-blue.png) left top no-repeat;
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  height: 35px;
+  line-height: 33px;
+  margin: 16 0 0 0;
+  padding: 0 0 0 20px;
+  text-shadow: 0 -1px 0 #03609e;
+}
+
+.digital_femsa-module-header a.digital_femsa-module-create-btn span {
+  background: url(img/bg_btn-blue.png) right bottom no-repeat;
+  display: block;
+  height: 35px;
+  margin: 0 -20px 0 0;
+  padding: 0 20px 0 0;
+}
+
+.digital_femsa-module-wrap {
+  background-color: #f7fbff;
+  border: #c3d9ef solid 1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  clear: both;
+  margin: 0 0 15px 0;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.digital_femsa-module-col1 {
+  float: right;
+  margin: 0;
+  overflow: hidden;
+  width: 320px;
+}
+
+.digital_femsa-module-col2 {
+  margin: 0 335px 0 0;
+  overflow: hidden;
+  min-width: 563px;
+}
+
+.digital_femsa-module-col1inner {
+  float: left;
+  margin: 0;
+  overflow: hidden;
+  width: 48%;
+}
+
+.digital_femsa-module-col2inner {
+  clear: both;
+  margin: 0;
+  padding-top: 20px;
+}
+
+.digital_femsa-module-wrap,
+.digital_femsa-module-col2inner h3 {
+  border-top: #c3d9ef solid 1px;
+  padding-top: 20px;
+}
+
+.digital_femsa-module-wrap h3 {
+  color: #008cdd;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 22px;
+  margin: 0 0 15px 0;
+  padding: 0;
+  text-shadow: 0 -1px 0 #daf2ff;
+}
+
+.digital_femsa-module-wrap p,
+.digital_femsa-module-wrap ul li {
+  color: #535353;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.digital_femsa-module-wrap a.digital_femsa-module-btn {
+  background: url(img/digital_femsa-btn-arrow.png) left center no-repeat;
+  color: #008cdd;
+  display: inline-block;
+  margin: 7px 0;
+  padding-left: 8px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.digital_femsa-module-wrap a.digital_femsa-module-btn:hover {
+  text-decoration: underline;
+}
+
+.digital_femsa-module-wrap ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.digital_femsa-module-wrap ul li {
+  background: url(img/checkmark-blue.png) left 5px no-repeat;
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+
+img.digital_femsa-cc {
+  margin: 0 40px 0 0;
+  vertical-align: middle;
+}
+
+.floatRight {
+  float: right;
+}
+
+.digital_femsa-module-wrap-video {
+  background-color: #fff;
+  border: #c3d9ef solid 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 6px;
+  overflow: hidden;
+}
+
+img.digital_femsa-dashboard {
+  margin: 0;
+}
+
+a.digital_femsa-module-video-btn {
+  display: inline-block;
+  margin: 15px 0 0 0;
+  position: relative;
+}
+
+img.digital_femsa-video-btn {
+  position: absolute;
+  left: 119px;
+  top: 80px;
+}
+
+table.digital_femsa-technical td {
+  padding: 4px 0;
+}
+
+fieldset.digital_femsa-settings {
+  width: 670px;
+  float: left;
+  margin-right: 20px;
+}
+
+table.digital_femsa-settings label {
+  float: none;
+  padding-right: 0;
+  text-align: right;
+  width: auto;
+}
+
+table.digital_femsa-settings {
+  margin: 0;
+}
+
+table.digital_femsa-settings td {
+  padding: 8px;
+}
+
+table.digital_femsa-settings td.td-right {
+  color: #7f7f7f;
+  font-size: 0.9em;
+}
+
+table.digital_femsa-settings td.td-noborder {
+  border-bottom: none;
+}
+
+table.digital_femsa-settings td.save {
+  text-align: center;
+  padding-top: 15px;
+}
+
+table.digital_femsa-settings,
+table.innerTable td {
+  border: none;
+  padding: 6px;
+}
+
+table.digital_femsa-settings,
+table.innerTable td.vertBorder {
+  border-left: #ccced7 solid 1px;
+}
+
+input.button:hover {
+  cursor: pointer;
+}
+
+fieldset.digital_femsa-cc-numbers {
+  width: 277px;
+  float: left;
+}
+
+table.digital_femsa-cc-numbers {
+  border: #ccced7 solid 1px;
+  background-color: #fff;
+}
+
+table.digital_femsa-cc-numbers th {
+  background-color: #f7fbff;
+  border-bottom: #ccced7 solid 1px;
+  padding: 5px 25px 5px 8px;
+  text-align: left;
+}
+
+table.digital_femsa-cc-numbers td {
+  border-bottom: #ccced7 solid 1px;
+  padding: 5px 25px 5px 8px;
+}
+
+table.digital_femsa-cc-numbers td.last {
+  border-bottom: none;
+}
+
+/* table.digital_femsa-cc-numbers td.number code {
+  font-family: Courier;
+} */
+
+.digital_femsa-module-wrapper table {
+  color: #585a69;
+  font-size: 12px;
+  text-shadow: 0 1px 0 #fff;
+}
